@@ -1,4 +1,6 @@
-game E
+game Example
+
 type T = {A,B}
+
 v : T
 v = A

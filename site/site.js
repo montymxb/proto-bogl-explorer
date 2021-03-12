@@ -1,9 +1,58 @@
 "use strict";
 (function(window,document) {
 
+  function renderGraph(dotContent) {
+    /*
+    d3.select("#graph").graphviz({
+      width: "100vw",
+      height: "500",
+      fit: true,
+      zoomScaleExtent: [0.7,3],
+      zoomTranslateExtent: [[-1000, -1000], [1000, 1000]]
+    })
+        .fade(true)
+        .growEnteringEdges(true)
+        .renderDot(dotContent);
+        */
+  }
+
+  function updateError(msg) {
+    document.getElementById("graph").innerHTML = "<div id='error'>Error: "+msg+"</div>"
+  }
+
+  function code(c) {
+    c = c.replaceAll(/\n/gi, '<br/>');
+    c = c.replaceAll(/\t/gi, '&nbsp;&nbsp;&nbsp;&nbsp;');
+    return c;
+  }
+
+  // adds a fringe element
+  function populateFringe(s) {
+
+    let r = "<p id='count'>" + Object.keys(s).length + " results</p>";
+    let key = "";
+    console.dir(s)
+    for(key in s) {
+      if(s[key]["attrs"].length > 0) {
+        let c = code(s[key]["code"]);
+        let a = "* This program introduces " + s[key]["attrs"].join(", ");
+        r += "<h3>" + key + "</h3><span class='attr'>" + a + "</span><div class='code'>" + c + "</div>";
+      }
+    }
+    for(key in s) {
+      if(s[key]["attrs"].length == 0) {
+        let c = code(s[key]["code"]);
+        r += "<h3>" + key + "</h3><span class='attr'></span><div class='code'>" + c + "</div>";
+      }
+    }
+    document.getElementById("results").innerHTML = r;
+  }
+
   // handle sending & getting a request from the backend
   // Runs bogl code on the server, returns the result as JSON
   function mkPOST(url,content) {
+    document.getElementById("graph").innerHTML = "<div id='load1' class='loading'></div>";
+    document.getElementById("results").innerHTML = "";
     fetch(url
       ,{
           method: "POST",
@@ -20,40 +69,28 @@
       return res.json();
 
     }).then(function(resp) {
-      /*
-      callback({
-        response: resp,
-        status: respStatus
-      });
-      */
-      console.dir(resp)
+      document.getElementById("graph").innerHTML = "";
+      if(resp["content"]) {
+        // good result
+        renderGraph(resp["content"])
+        delete resp["content"]
+        // populate the fringe programs that come back
+        populateFringe(resp)
 
-    }).catch((error) => {
-      alert("Error occurred...(TODO show this on the UI via an interaction)");
-      /*
-      if((error instanceof SyntaxError || (error.name && error.name === "SyntaxError")) && respStatus === 504) {
-        // gateway timeout
-        updateResults(elm, " 🤖 BoGL Says: Unable to finish running your program, or not currently online. Double check your code, or check back later! ");
 
-      } else if((error instanceof SyntaxError || (error.name && error.name === "SyntaxError"))) {
-        // bad parse error
-        updateResults(elm, " 🤖 BoGL Says: Your program was unable to be understood. Please double check it and try again! ");
-
-      } else if((error instanceof TypeError || (error.name && error.name === "TypeError")) && respStatus === 0) {
-        // likely JS disabled
-        updateResults(elm, " 🤖 BoGL Says: Unable to execute your program. Make sure that Javascript is enabled and try again! ");
-
-      } else if((error instanceof TypeError || (error.name && error.name === "TypeError"))) {
-        // something else?
-        console.error(error);
-        updateResults(elm, " 🤖 BoGL Says: Unable to execute your program, please double check your code and try again. ");
+      } else if(resp["error"]) {
+        // parse error
+        updateError(resp["error"])
 
       } else {
-        // general error
-        updateResults(elm, " 🤖 BoGL Says: An error occurred: " + error + " ");
+        // something else
+        updateError("Unknown error")
 
       }
-      */
+
+    }).catch((error) => {
+      updateError(error);
+      throw error;
     });
   }
 
@@ -61,7 +98,7 @@
   window.onload = function() {
     let e = document.getElementById("search")
     e.addEventListener("click",() => {
-      mkPOST("http://localhost:8181/api",{prog: "game Test"})
+      mkPOST("http://localhost:8181/api",{prog: document.getElementById("codearea").value})
     })
   }
 

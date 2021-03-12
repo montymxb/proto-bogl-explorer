@@ -1,3 +1,4 @@
-game E
+game Example
+
 a5 : Int -> Int
 a5(x) = 5

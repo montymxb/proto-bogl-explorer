@@ -1,3 +1,4 @@
-game E
+game Example
+
 inc : Int -> Int
 inc(x) = x+1

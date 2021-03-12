@@ -1,13 +1,17 @@
 module ProtoBoglExplorer (protoBoglExplorer) where
 
-import Data.Aeson
+import Data.Aeson()
 import PGE_Server
 import System.Directory
-import System.Process
-import R32
+import FormalConceptAnalysis
 import Bogl_Specifics
+import Data.Aeson
+import Data.Text (Text,pack,unpack)
+import qualified Data.Vector as Vect
+import qualified Data.HashMap.Strict as HM
 
 --getBGLFileFromDir :: String -> String -> (String,IO String)
+
 getFileFromDir :: String -> String -> String -> IO (String, String)
 getFileFromDir ext dir s = do
   content <- readFile $ dir ++ s ++ ext
@@ -30,7 +34,7 @@ getAllBGLFilesFromDir dir = do
 
 protoBoglExplorer :: APIType
 protoBoglExplorer s = do
-  let dir = "db_programs/"
+  let dir = "db/"
   --let dir = "/Users/Bfriedman/OSU/Research/ConceptGraph/db_programs/"
   --let dir160 = "/Users/Bfriedman/Downloads/CS160-BoGL-section/assignment_9_tictactoe/"
   --let dir160 = "/Users/Bfriedman/Downloads/CS160-BoGL-section/assignment_8_nim_board/"
@@ -41,27 +45,21 @@ protoBoglExplorer s = do
 
   bglFiles1 <- getAllBGLFilesFromDir (dir ++ "simple/")
   bglFiles2 <- getAllBGLFilesFromDir (dir ++ "games/")
-  let bglFiles = bglFiles1 ++ bglFiles2
+  let bglFiles'= bglFiles1 ++ bglFiles2
+  let bglFiles = rightProgs $ parseBOGLPrograms $ bglFiles'
 
-  k1 <- getSimpleBGLFile "Simplest" -- Notakto
-  k2 <- getSimpleBGLFile "V_Ref"
-  k3 <- getSimpleBGLFile "V_Sub"
-  k4 <- getSimpleBGLFile "V_Add"
-  k5 <- getSimpleBGLFile "Input1"
-  k6 <- getSimpleBGLFile "V_AddSub"
-  k7 <- getSimpleBGLFile "V_Let1"
-  let known = [k1,k2,k3,k4,k5,k6,k7]
+  let kn = parseBOGLPrograms [("Program",s)]
+  let known = rightProgs kn
   -- k1,k2,k3,k4,k5,k6,k7 has empty classification!
 
   g1 <- getSimpleBGLFile "V_LetAddSub" -- tictactoe
-  g2 <- getGameBGLFile "tictactoe"
-  let goal = [] -- ("G1","game S\nv : Int\nv = let x = 24 in 24 * 2 + 5 - x")
+  --g2 <- getGameBGLFile "tictactoe"
+  let goal = rightProgs $ parseBOGLPrograms [] -- ("G1","game S\nv : Int\nv = let x = 24 in 24 * 2 + 5 - x")
 
   let extraProgs    = []
   let extraAttribs  = []
 
-  dotContent <- r32 (FCA
-        parseBOGLPrograms
+  (dotContent,nextProgs) <- fca (FCA
         boglConceptMapping
         known
         goal
@@ -69,4 +67,14 @@ protoBoglExplorer s = do
         extraProgs
         extraAttribs)
 
-  return dotContent
+  let npNames = map fst nextProgs
+  let nps' = filter (\(a,b) -> elem a (map fst nextProgs)) bglFiles'
+  let nps2 = map (\(a,b) -> (a,b,case lookup a nextProgs of
+                                    Just attrs -> attrs
+                                    Nothing    -> [])) nps'
+  let npsf = map (\(a,b,c) -> (pack a, Object $ HM.fromList [(pack "code",String $ pack b),(pack "attrs", Array $ Vect.fromList (map (String . pack) c))])) nps2
+
+  let lpk = leftProgs kn
+  return $ case length lpk of
+    0 -> Object $ HM.fromList $ (pack "content", String $ pack dotContent) : npsf
+    _ -> Object $ HM.fromList [(pack "error", String $ pack $ show $ snd $ head lpk)]

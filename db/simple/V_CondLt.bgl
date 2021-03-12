@@ -1,3 +1,4 @@
-game E
+game Example
+
 v : Bool
 v = 5 < 2

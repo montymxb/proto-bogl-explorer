@@ -3,31 +3,25 @@
 <head>
   <title>Proto BoGL Explorer</title>
   <meta charset="utf-8">
-  <script src="site.js" type="text/javascript"></script>
+  <script src="d3.v5.min.js"></script>
+  <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
+  <script src="d3-graphviz.js"></script>
+  <script src="site.js" type="text/javascript" async="true"></script>
   <link href="site.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
   <div id='main'>
     <div id='wrap'>
-      <div class='left'>
-        <div>
-          <h3 class='pn'>Simplest</h3>
-          <br/>
-        <div class='code'>
-          game Simplest
-        </div>
-        <input id="search" type="button" value="Search">
-        <h3 class='pn'>
-          V_Ref
-        </h3>
-        <br/>
-       </div>
-     </div>
+      <img id="prim-img" src="favicon.ico" width="150" height="150" alt="BoGL Icon">
+      <h1 id='title'>Bogl.it</h1>
+      <textarea id="codearea" class='code' editable="true" placeholder="game Example">game Example</textarea>
+      <input id="search" type="button" value="Search">
+      <div id="results"></div>
+      <div id="graph" style="text-align: center;"></div>
     </div>
-    <div id="img-canvas"></div>
-    <h3>
-      Search results down here...
-    </h3>
+  </div>
+  <div id="footer">
+    <a href="https://bogl.engr.oregonstate.edu">BoGL Editor</a> | <a href="https://bogl.engr.oregonstate.edu/tutorials/">BoGL Tutorials</a>
   </div>
 </body>
 </html>

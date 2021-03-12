@@ -1,3 +1,4 @@
-game E
+game Example
+
 gt : (Int,Int) -> Bool
 gt(x,y) = x > y

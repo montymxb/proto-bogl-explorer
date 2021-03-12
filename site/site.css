@@ -4,48 +4,85 @@ body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-h2 {
-  border-style: none none solid none;
-  border-color: #000;
-  border-width: 2px;
+#title {
+  text-align: center;
+  font-size: 70px;
+  font-weight: 200;
 }
 
-h3 {
-  border-style: none none solid none;
-  border-color: #000;
-  border-width: 2px;
+textarea:focus {
+  outline-width: 0;
 }
 
-img {
+#count {
+  color: #999;
+  text-align: center;
+}
+
+#error {
   display: block;
-  max-width: 97vw;
-  margin: 4px auto;
-  padding-top: 16px;
+  background: #fcc;
+  border-radius: 8px;
+  max-width: 800px;
+  padding: 8px;
+  margin: 8px auto;
 }
 
-.green {
-  color: #0a0;
+#footer {
+  display: block;
+  color: #ccc;
+  font-size: 12px;
+  text-align: center;
+  margin: 16px auto;
+}
+
+#codearea {
+  display: block;
+  width: 50vw;
+  margin: 8px auto;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 16px;
+  min-height: 100px;
+}
+
+#prim-img {
+  margin: 8px auto;
+  display: block;
+  border-radius: 16px;
+  transition: 0.3s;
+}
+
+#prim-img:hover {
+  box-shadow: 8px 8px #6cf;
+}
+
+#graph {
+  display: block;
+  width: 100vw;
+  margin: 16px auto 8px auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+#search {
+  display: block;
+  width: 200px;
+  margin: 8px auto;
+  height: 25px;
+  transition: 0.3s;
+}
+
+#search:hover {
+  cursor: pointer;
+  color: #6cf;
 }
 
 #main {
   background: #fff;
-  /*width: 1000px;*/
   margin: 4px auto;
-}
-
-.step-block {
-  display: block;
-  border-style: solid none none none;
-  border-color: #000;
-  border-width: 2px;
-}
-
-.step {
-  display: inline-block;
-  /*height: 100px;*/
-  padding: 8px;
-  text-align: center;
-  font-size: 12px;
 }
 
 #wrap {
@@ -55,24 +92,61 @@ img {
   width: 100vw;
 }
 
-.left {
-  float: left;
-  width: 50vw;
-  min-height: 400px;
-  background: #eef;
-}
-
-.left div {
+#results {
+  max-width: 800px;
+  display: block;
+  margin: 8px auto;
   padding: 8px;
 }
 
-.right {
-  float: right;
-  width: 50vw;
-  min-height: 400px;
-  background-color: #efe;
+#results h3 {
+  font-size: 30px;
+  font-weight: 300px;
+  color: #111;
+  margin: 8px auto;
+  margin-right: 16px;
+  display: inline-block;
 }
 
-.right div {
-  padding: 8px;
+.code {
+  font-family: "Inconsolata", monospace;
+}
+
+#results .code {
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 32px;
+}
+
+#results .attr {
+  font-size: 14px;
+  color: #999;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+    background: #fff;
+    border-radius: 20px;
+  }
+  to {
+    transform: rotate(360deg);
+    background: #000;
+    border-radius: 0px;
+    border-color: #fff;
+  }
+}
+
+.loading {
+  transform: rotate(120deg)
+  display: block;
+  margin: 8px auto;
+  width: 20px;
+  height: 20px;
+  background: #ccc;
+
+  animation-name: spinner;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }

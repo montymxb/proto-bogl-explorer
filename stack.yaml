@@ -37,7 +37,6 @@ resolver: lts-17.5
 packages:
 - .
 - ../ConceptGraph/
-- ../../Capstone/bogl/
 # Dependency packages to be pulled from upstream that are not in the resolver.
 # These entries can reference officially published versions as well as
 # forks / in-progress versions pinned to a git hash. For example:
@@ -51,6 +50,10 @@ extra-deps:
 - json-0.10@sha256:d9fc6b07ce92b8894825a17d2cf14799856767eb30c8bf55962baa579207d799,3210
 - random-strings-0.1.1.0@sha256:935a7a23dab45411960df77636a29b44ce42b89eeb15f2b1e809d771491fa677,2517
 - partial-order-0.2.0.0@sha256:a0d6ddc9ebcfa965a5cbcff1d06d46a79d44ea5a0335c583c2a51bcb41334487,2275
+- git: https://github.com/The-Code-In-Sheep-s-Clothing/bogl.git
+  commit: 16c5bf00b2e44a5380f3f67604a22a9671e0eb37
+#- git: https://github.com/montymxb/ConceptGraph.git
+#  commit: 0374600f5568863436743d346f5c2d982089737c
 
 # Override default flag values for local packages and extra-deps
 # flags: {}

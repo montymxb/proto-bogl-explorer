@@ -1,3 +1,4 @@
-game E
+game Example
+
 id : Int -> Int
 id(x) = x

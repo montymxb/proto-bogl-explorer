@@ -1,5 +1,7 @@
-game E
+game Example
+
 a : Int
 a = 5
+
 b : Int
 b = a

@@ -1,3 +1,4 @@
-game E
+game Example
+
 wh : Int -> Int
 wh(x) = while False do x
