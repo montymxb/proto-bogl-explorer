@@ -1,0 +1,9 @@
+game T
+
+type ExtendedInt = Int & {Nothing}
+
+v1 : ExtendedInt
+v1 = 5
+
+v2 : ExtendedInt
+v2 = Nothing

@@ -52,9 +52,9 @@ protoBoglExplorer s = do
   let known = rightProgs kn
   -- k1,k2,k3,k4,k5,k6,k7 has empty classification!
 
-  g1 <- getSimpleBGLFile "V_LetAddSub" -- tictactoe
-  --g2 <- getGameBGLFile "tictactoe"
-  let goal = rightProgs $ parseBOGLPrograms [] -- ("G1","game S\nv : Int\nv = let x = 24 in 24 * 2 + 5 - x")
+  g1 <- getSimpleBGLFile "V_LetAddSub"
+  g2 <- getGameBGLFile "tictactoe"
+  let goal = rightProgs $ parseBOGLPrograms [g2] -- ("G1","game S\nv : Int\nv = let x = 24 in 24 * 2 + 5 - x")
 
   let extraProgs    = []
   let extraAttribs  = []
