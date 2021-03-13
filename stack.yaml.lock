@@ -28,13 +28,13 @@ packages:
 - completed:
     name: ConceptGraph
     version: 0.2.0.0
-    git: https://github.com/montymxb/ConceptGraph.git
+    git: git@github.com:montymxb/ConceptGraph.git
     pantry-tree:
       size: 12278
       sha256: a563cc6683521bb10c03d03ddb7fe85aea3fb7c3916abdf7eaa550f39c41723b
     commit: 0d13229b7bd913c2607dc5454e215bb0348aa553
   original:
-    git: https://github.com/montymxb/ConceptGraph.git
+    git: git@github.com:montymxb/ConceptGraph.git
     commit: 0d13229b7bd913c2607dc5454e215bb0348aa553
 snapshots:
 - completed:

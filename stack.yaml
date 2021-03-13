@@ -52,7 +52,7 @@ extra-deps:
 - partial-order-0.2.0.0@sha256:a0d6ddc9ebcfa965a5cbcff1d06d46a79d44ea5a0335c583c2a51bcb41334487,2275
 - git: https://github.com/The-Code-In-Sheep-s-Clothing/bogl.git
   commit: 16c5bf00b2e44a5380f3f67604a22a9671e0eb37
-- git: https://github.com/montymxb/ConceptGraph.git
+- git: git@github.com:montymxb/ConceptGraph.git
   commit: 0d13229b7bd913c2607dc5454e215bb0348aa553
 
 # Override default flag values for local packages and extra-deps

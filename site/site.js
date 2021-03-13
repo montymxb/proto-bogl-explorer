@@ -134,7 +134,7 @@
 
     let e = document.getElementById("search")
     e.addEventListener("click",() => {
-      mkPOST("http://localhost:8181/api",{
+      mkPOST("/api",{
         knownProg: document.getElementById("codearea1").value,
         goalProg: document.getElementById("codearea2").value
       })
