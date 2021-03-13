@@ -1,23 +1,17 @@
 "use strict";
 (function(window,document) {
 
+  let d3Grapher = null;
+
   function renderGraph(dotContent) {
-    /*
-    d3.select("#graph").graphviz({
-      width: "100vw",
-      height: "500",
-      fit: true,
-      zoomScaleExtent: [0.7,3],
-      zoomTranslateExtent: [[-1000, -1000], [1000, 1000]]
-    })
-        .fade(true)
-        .growEnteringEdges(true)
-        .renderDot(dotContent);
-        */
+    var t = d3.transition()
+    .duration(333)
+    .ease(d3.easeLinear);
+    d3Grapher.transition(t).renderDot(dotContent);
   }
 
   function updateError(msg) {
-    document.getElementById("graph").innerHTML = "<div id='error'>Error: "+msg+"</div>"
+    document.getElementById("loadspace").innerHTML = "<div id='error'>Error: "+msg+"</div>"
   }
 
   function code(c) {
@@ -51,7 +45,7 @@
   // handle sending & getting a request from the backend
   // Runs bogl code on the server, returns the result as JSON
   function mkPOST(url,content) {
-    document.getElementById("graph").innerHTML = "<div id='load1' class='loading'></div>";
+    document.getElementById("loadspace").innerHTML = "<div id='load1' class='loading'></div>";
     document.getElementById("results").innerHTML = "";
     fetch(url
       ,{
@@ -69,7 +63,7 @@
       return res.json();
 
     }).then(function(resp) {
-      document.getElementById("graph").innerHTML = "";
+      document.getElementById("loadspace").innerHTML = "";
       if(resp["content"]) {
         // good result
         renderGraph(resp["content"])
@@ -94,11 +88,56 @@
     });
   }
 
+  function setKnown(p) {
+    if(p) {
+      document.getElementById("codearea1").value = p;
+    } else {
+      document.getElementById("codearea1").value = ""
+    }
+  }
+
+  function setGoal(p) {
+    if(p) {
+      document.getElementById("codearea2").value = p;
+    } else {
+      document.getElementById("codearea2").value = "";
+    }
+  }
+
+  let windowGet = {};
+  if(document.location.toString().indexOf('?') !== -1) {
+      let query = document.location
+                     .toString()
+                     // get the query string
+                     .replace(/^.*?\?/, '')
+                     // and remove any existing hash string (thanks, @vrijdenker)
+                     .replace(/#.*$/, '')
+                     .split('&');
+
+      for(var i=0, l=query.length; i<l; i++) {
+         let aux = decodeURIComponent(query[i]).split('=');
+         windowGet[aux[0]] = aux[1].replaceAll(/\+/gi," ");
+      }
+  }
+
 
   window.onload = function() {
+
+    d3Grapher = d3.select("#graph").graphviz({
+      width: "100vw",
+      height: "500",
+      fit: true,
+      zoomScaleExtent: [0.7,3],
+      zoomTranslateExtent: [[-1000, -1000], [1000, 1000]]
+    }).fade(true)
+      .growEnteringEdges(true);
+
     let e = document.getElementById("search")
     e.addEventListener("click",() => {
-      mkPOST("http://localhost:8181/api",{prog: document.getElementById("codearea").value})
+      mkPOST("http://localhost:8181/api",{
+        knownProg: document.getElementById("codearea1").value,
+        goalProg: document.getElementById("codearea2").value
+      })
     })
   }
 

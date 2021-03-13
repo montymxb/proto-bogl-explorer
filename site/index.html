@@ -14,10 +14,20 @@
     <div id='wrap'>
       <img id="prim-img" src="favicon.ico" width="150" height="150" alt="BoGL Icon">
       <h1 id='title'>Bogl.it</h1>
-      <p style="text-align:center;color:#999;font-style:italic">* This is a prototype tool, and a work in progress...</p>
-      <textarea id="codearea" class='code' editable="true" placeholder="game Example">game Example</textarea>
+      <p style="text-align:center;color:#999;font-style:italic">
+        * This is a prototype tool, and a work in progress...
+      </p>
+      <ol style="color:#444;display:block;margin:8px auto;max-width:50vw;padding:8px">
+        <li>Enter a <span class="b">Known</span> BoGL program in the top box.</li>
+        <li><span class="i">(optional)</span> Enter a <span class="b">Goal</span> BoGL program you <span class="i">want</span> to know in the bottom box.</li>
+        <li>Click <span class="b">Search</span> to see the next programs to learn.</li>
+        <li>Next programs you can learn are listed below by: name, concepts they introduce, and their code.</li>
+      </ol>
+      <textarea id="codearea1" name="known" class='code codearea' editable="true" placeholder="game KnownExample" autocorrect="off">game KnownExample</textarea>
+      <textarea id="codearea2" name="goal" class='code codearea' editable="true" placeholder="game ExampleToCompareWith" autocorrect="off"></textarea>
       <input id="search" type="button" value="Search">
       <div id="results"></div>
+      <div id="loadspace"></div>
       <div id="graph" style="text-align: center;"></div>
     </div>
   </div>

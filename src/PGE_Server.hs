@@ -19,7 +19,7 @@ import qualified Data.HashMap.Strict as HM
 
 type PGE_API = "api" :> ReqBody '[JSON] Value :> Post '[JSON] Value
 
-type APIType = String -> IO Value ---[(String,String)]
+type APIType = String -> String -> IO Value ---[(String,String)]
 
 api :: Proxy PGE_API
 api = Proxy
@@ -33,14 +33,14 @@ apiResp xs = let remap = map (\(a,b) -> (a,String b)) xs in
   --Object $ HM.fromList [(k,String v)]
 
 handler :: APIType -> Value -> Handler Value
-handler f (Object hm) = case HM.lookup "prog" hm of
-                          (Just (String prog)) -> do
-                                                    ls <- liftIO $ f $ unpack prog
-                                                    --let dotSpec = String $ pack s
-                                                    --let resp = apiResp (map (\(a,b) -> (pack a, pack b)) ls)
-                                                    return ls
-                                                    -- apiResp [("content", pack s),("outerfringe",ls)]
-                          _                    -> return $ apiErr "Bad program"
+handler f (Object hm) = case (HM.lookup "knownProg" hm, HM.lookup "goalProg" hm) of
+                          (Just (String kProg), (Just (String gProg))) -> do
+                                                                            ls <- liftIO $ f (unpack kProg) (unpack gProg)
+                                                                            --let dotSpec = String $ pack s
+                                                                            --let resp = apiResp (map (\(a,b) -> (pack a, pack b)) ls)
+                                                                            return ls
+                                                                            -- apiResp [("content", pack s),("outerfringe",ls)]
+                          (_,_)                                        -> return $ apiErr "Bad program"
 handler _ _           = return $ apiErr "Bad JSON provided"
 
 serverApp :: APIType -> Application
