@@ -130,6 +130,7 @@
       width: "100vw",
       height: "500",
       fit: true,
+      zoom: false,
       zoomScaleExtent: [0.7,3],
       zoomTranslateExtent: [[-1000, -1000], [1000, 1000]]
     }).fade(true)
