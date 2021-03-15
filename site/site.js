@@ -33,13 +33,13 @@
         if(s[key]["attrs"].length == 1) {
           a = "* This program introduces the concept " + s[key]["attrs"][0];
         }
-        r += "<h3>" + key.replaceAll(/"_"/gi, " ") + "</h3><span class='attr'>" + a + "</span><div class='code'>" + c + "</div>";
+        r += "<h3>" + key.replaceAll(/_/gi, " ") + "</h3><span class='attr'>" + a + "</span><div class='code'>" + c + "</div>";
       }
     }
     for(key in s) {
       if(s[key]["attrs"].length == 0) {
         let c = code(s[key]["code"]);
-        r += "<h3>" + key.replaceAll(/"_"/gi, " ") + "</h3><span class='attr'></span><div class='code'>" + c + "</div>";
+        r += "<h3>" + key.replaceAll(/_/gi, " ") + "</h3><span class='attr'></span><div class='code'>" + c + "</div>";
       }
     }
     document.getElementById("results").innerHTML = r;
