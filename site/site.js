@@ -29,14 +29,17 @@
     for(key in s) {
       if(s[key]["attrs"].length > 0) {
         let c = code(s[key]["code"]);
-        let a = "* This program introduces " + s[key]["attrs"].join(", ");
-        r += "<h3>" + key + "</h3><span class='attr'>" + a + "</span><div class='code'>" + c + "</div>";
+        let a = "* This program introduces the concepts " + s[key]["attrs"].join(", ");
+        if(s[key]["attrs"].length == 1) {
+          a = "* This program introduces the concept " + s[key]["attrs"][0];
+        }
+        r += "<h3>" + key.replaceAll(/"_"/gi, " ") + "</h3><span class='attr'>" + a + "</span><div class='code'>" + c + "</div>";
       }
     }
     for(key in s) {
       if(s[key]["attrs"].length == 0) {
         let c = code(s[key]["code"]);
-        r += "<h3>" + key + "</h3><span class='attr'></span><div class='code'>" + c + "</div>";
+        r += "<h3>" + key.replaceAll(/"_"/gi, " ") + "</h3><span class='attr'></span><div class='code'>" + c + "</div>";
       }
     }
     document.getElementById("results").innerHTML = r;
