@@ -1,0 +1,69 @@
+{-
+
+Hypothetical hybrid imperative/functional approach requires the
+following additions/changes.
+
+(1) Variables can be declared as state variables (using some notation)
+      Here: nimBoard and Player
+
+(2) A new unit type () = {()} indicating that state operations don't return any meaningful values (don't worry about the notation).
+
+(3) Operations for state manipulations return ()
+
+(4) Control structures for combining state operations (also return OK)
+    In particular, we need:
+    (A) an assignment operation ":="
+    (B) an operation for sequencing ";" state operations
+    (C) a while operation whose bode is a state operation
+    (D) we probably also need a second if-then-else construct
+    (E) a return construct to allow returning values from a state computation
+
+(5) We don't need the value representation of the state anymore
+      Here: the type NimState
+-}
+
+game NimHybrid
+
+type Board = Array (1,1) of Int
+type Input = Int
+
+type Player = {Class, Teacher}
+
+
+-- place on the board where items are stored
+--
+items : (Int,Int)
+items = (1,1)
+
+-- We declare the nimBoard and player to be state variables;
+-- We assign their initial values using ":=" (we could do that later in play)
+-- Those value can be later changed or overwritten, again by using ":="
+--
+nimBoard : !Board
+nimBoard!(1,1) := 0
+
+player : !Player
+player := Teacher
+
+getInput : Player -> Int
+getInput(player) = let n = input in
+                       if and(n>=1,n<=3) then n else getInput(player)
+
+-- switch now changes the player within the state
+--
+switchPlayer : () -> ()
+switch() = player := if player == Class then Teacher else Class
+
+
+-- NOTE:
+-- (1) we use := instead of place to change the board
+-- (2) we use ";" to compose state operations
+-- (3) we use "{}" to group a sequence of state operations
+-- (4) outcome can be replaced
+--
+play : Int -> Player
+play(n) = while (board!items>0) do {
+                board!items := board!items-getInput(player);
+                switchPlayer()
+          };
+          return player

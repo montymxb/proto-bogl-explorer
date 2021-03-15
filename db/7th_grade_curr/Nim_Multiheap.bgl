@@ -1,0 +1,61 @@
+--Algorithm: Play the game of Nim with many piles of N objects
+game Nimv2
+type Player = {Player1Name, Player2Name}
+type Board = Array(3, 1) of Int
+type Input = Int
+
+initialHeap: Board
+initialHeap!(x, y) = 10
+
+getObjectsToRemove: (Board, Int) -> Int
+getObjectsToRemove(heap, whichHeap) =
+   let objectsToRemove = input in
+   if or(objectsToRemove < 1, or(objectsToRemove > 3, objectsToRemove>heap!(whichHeap, 1))) then
+      getObjectsToRemove(heap, whichHeap)
+   else
+      objectsToRemove
+
+removeObjects: (Int, Int, Board) -> Board
+removeObjects(whichHeap, objectsToRemove, heap)= place((heap!(whichHeap,1) - objectsToRemove), heap, (whichHeap,1))
+
+switchPlayer: Player -> Player
+switchPlayer(curPlayer) =
+   if curPlayer == Player1Name then
+	   Player2Name 
+   else
+	   Player1Name 
+
+areHeapsEmpty: (Board, Int) -> Bool
+areHeapsEmpty(heap, x) = 
+   if heap!(x,1) /= 0 then 
+      False
+   else if x==1 then 
+      True
+   else 
+      areHeapsEmpty(heap, x-1)
+
+
+getHeapChoice: (Board, Int) -> Int
+getHeapChoice(heap, numHeaps) =
+   let whichHeap = input in
+   if or(whichHeap < 1, or(whichHeap > numHeaps, heap!(whichHeap, 1)==0)) then
+      getHeapChoice(heap, numHeaps)
+   else
+      whichHeap
+
+
+play: (Board, Int, Player) -> (Board, Int, Player)
+play(heap, numHeaps, curPlayer) = 
+   while not(areHeapsEmpty(heap, numHeaps)) do (
+         let whichHeap=getHeapChoice(heap, numHeaps) in
+         let objects=getObjectsToRemove(heap, whichHeap) in 
+         removeObjects(whichHeap, objects, heap), numHeaps,
+         switchPlayer(curPlayer)
+   )
+   
+getPlayer: (Board, Int, Player) -> (Board, Int, Player)
+getPlayer(heap, numHeaps, curPlayer) = curPlayer
+
+playNim: (Board, Int, Player) -> Player
+playNim(heap, numHeaps, curPlayer) = let playInfo = play(heap, numHeaps, curPlayer) in
+                                     switchPlayer(getPlayer(playInfo))

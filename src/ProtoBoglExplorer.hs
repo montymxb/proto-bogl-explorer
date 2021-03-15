@@ -42,9 +42,11 @@ protoBoglExplorer kProg gProg = do
 
   let getSimpleBGLFile = getFileFromDir ".bgl" (dir ++ "simple/")
   let getGameBGLFile = getFileFromDir ".bgl" (dir ++ "games/")
+  let getCurrBGLFile = getFileFromDir ".bgl" (dir ++ "7th_grade_curr/")
 
   bglFiles1 <- getAllBGLFilesFromDir (dir ++ "simple/")
   bglFiles2 <- getAllBGLFilesFromDir (dir ++ "games/")
+  bglFiles2 <- getAllBGLFilesFromDir (dir ++ "7th_grade_curr/")
   let bglFiles'= bglFiles1 ++ bglFiles2
   let bglFiles = rightProgs $ parseBOGLPrograms $ bglFiles'
 

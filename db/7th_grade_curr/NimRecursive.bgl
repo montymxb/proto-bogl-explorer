@@ -1,0 +1,61 @@
+-- The recursive implementation of Nim. The person who takes the last
+-- items loses. To change to last item wins, change in the "else"
+-- branch of continuePlay from "player" to "switch(player)".
+--
+-- Play the game by running:
+--
+--    play(10)
+--
+-- to start with 10 items on the heap. Teacher goes first. To have the class
+-- go first, use:
+--
+--   classFirst(10)
+--
+--
+game Nim
+
+type Board = Array (1,1) of Int
+type Input = Int
+
+type Player = {Class, Teacher}
+type NimState = (Board,Player)
+
+
+-- place on the board where items are stored
+--
+items : (Int,Int)
+items = (1,1)
+
+nimBoard : Board
+nimBoard!(1,1) = 0
+
+getInput : Player -> Int
+getInput(player) = let n = input in
+                       if and(n>=1,n<=3) then n else getInput(player)
+
+switch : Player -> Player
+switch(player) = if player == Class then Teacher else Class
+
+continuePlay : NimState -> Player
+continuePlay(board,player) = if board!items > 0 then
+                                continuePlay(place(board!items-getInput(player),board,items),
+                                             switch(player))
+                             else
+                                player
+
+play : Int -> Player
+play(n) = let initial = (place(n,nimBoard,items),Teacher) in
+              continuePlay(initial)
+
+
+{-
+
+Put 10 objects in the heap
+ContinuePlay:
+   IF the game is not over DO
+      Player removes 1, 2, or 3 objects from the heap
+      Switch to the next player
+      ContinuePlay
+   ELSE
+      Player who took the last object is the winner 
+-}

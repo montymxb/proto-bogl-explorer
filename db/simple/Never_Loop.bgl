@@ -1,4 +1,6 @@
 game Example
 
+-- does not loop
+-- works just like 'id'
 wh : Int -> Int
 wh(x) = while False do x

@@ -1,0 +1,145 @@
+-- Examle RUN: checkSet(makeSet)
+game MakingSets
+
+-- A color is either red, purple, or green, so we need curly braces
+type Color = {Red, Purple, Green}
+-- A color is either diamond, squiggle, or oval, so we need curly braces
+type Shape = {Diamond, Squiggle, Oval}
+-- A color is either solid, striped, outlined, so we need curly braces
+type Shading = {Solid, Striped, Outlined}
+-- The number is either a 1, 2, or 3, which is an integer
+type Number = Int
+
+-- A card has 4 features that are all required, so we need parenthesis
+type Card = (Color, Shape, Shading, Number)
+-- A set has 3 cards that are all required, so we need parenthesis
+type Set = (Card, Card, Card)
+
+--a function that creates a set of 3 cards to check if it is a SET
+makeSet : Set
+makeSet = ((Red, Diamond, Striped, 3), 
+           (Red, Squiggle, Solid, 3), 
+           (Red, Oval, Outlined, 3)
+          )
+
+getColor : Card -> Color
+getColor(color, shape, shade, num) = color
+
+getShape : Card -> Shape
+getShape(color, shape, shade, num) = shape
+
+getShade : Card -> Shading
+getShade(color, shape, shade, num) = shade
+
+getNum : Card -> Number
+getNum(color, shape, shade, num) = num
+
+-- Check to see if the 3 cards is a set using an or because the can either be all the same or all different
+checkSet : Set -> Bool
+checkSet(c1, c2, c3) = if or(and(getColor(c1) == getColor(c2), getColor(c1) == getColor(c3)), 
+                             and(and(getColor(c1) /= getColor(c2), getColor(c1) /= getColor(c3)), getColor(c2) /= getColor(c3))) then
+                          -- if all the colors were the same or different, then go check the shapes
+                          if or(and(getShape(c1) == getShape(c2), getShape(c1) == getShape(c3)), 
+                                and(and(getShape(c1) /= getShape(c2), getShape(c1) /= getShape(c3)), getShape(c2) /= getShape(c3))) then
+                             -- if all the colors were the same or different, and all the shapes were the same or different, then check shades
+                             if or(and(getShade(c1) == getShade(c2), getShade(c1) == getShade(c3)),
+                                   and(and(getShade(c1) /= getShade(c2), getShade(c1) /= getShade(c3)), getShade(c2) /= getShade(c3))) then
+                                -- if all the colors were the same or different, all the shapes were the same or different, and shades were the 
+                                -- same or different, then go check the number
+                                if or(and(getNum(c1) == getNum(c2), getNum(c1) == getNum(c3)),
+                                      and(and(getNum(c1) /= getNum(c2), getNum(c1) /= getNum(c3)), getNum(c2) /= getNum(c3))) then
+                                   True
+                                -- if the numbers were not all the same or different, then not a set
+                                else
+                                   False
+                             -- if the shading wasn't  all the same or different, then not a set
+                             else
+                                False
+                          -- if the shapes were not all the same or different, then not a set
+                          else
+                             False
+                       -- if the colors were not all the same or different, then not a set
+                       else
+                          False
+
+{-
+-- This is what happens when you don't have an or provided to you
+checkSet : Set -> Bool
+checkSet(c1, c2, c3) = if and(getColor(c1) == getColor(c2), getColor(c1)==getColor(c3)) then
+                          if and(getShape(c1) == getShape(c2), getShape(c1)==getShape(c3)) then
+                             if and(getShade(c1) == getShade(c2), getShade(c1)==getShade(c3)) then
+                                if and(getNum(c1) == getNum(c2), getNum(c1)==getNum(c3)) then
+                                   True
+                                else if and(and(getNum(c1) /= getNum(c2), getNum(c1)/=getNum(c3)),getNum(c2)/=getNum(c3)) then
+                                   True
+                                else
+                                   False
+                             else if and(and(getShade(c1) /= getShade(c2), getShade(c1)/=getShade(c3)),getShade(c2)/=getShade(c3)) then
+                                if and(getNum(c1) == getNum(c2), getNum(c1)==getNum(c3)) then
+                                   True
+                                else if and(and(getNum(c1) /= getNum(c2), getNum(c1)/=getNum(c3)),getNum(c2)/=getNum(c3)) then
+                                   True
+                                else
+                                   False
+                              else
+                                 False
+                          else if and(and(getShape(c1) /= getShape(c2), getShape(c1)/=getShape(c3)),getShape(c2)/=getShape(c3)) then
+                             if and(getShade(c1) == getShade(c2), getShade(c1)==getShade(c3)) then
+                                if and(getNum(c1) == getNum(c2), getNum(c1)==getNum(c3)) then
+                                   True
+                                else if and(and(getNum(c1) /= getNum(c2), getNum(c1)/=getNum(c3)),getNum(c2)/=getNum(c3)) then
+                                   True
+                                else
+                                   False
+                             else if and(and(getShade(c1) /= getShade(c2), getShade(c1)/=getShade(c3)),getShade(c2)/=getShade(c3)) then
+                                if and(getNum(c1) == getNum(c2), getNum(c1)==getNum(c3)) then
+                                   True
+                                else if and(and(getNum(c1) /= getNum(c2), getNum(c1)/=getNum(c3)),getNum(c2)/=getNum(c3)) then
+                                   True
+                                else
+                                   False
+                              else
+                                 False
+                          else
+                             False
+                       else if and(and(getColor(c1) /= getColor(c2), getColor(c1)/=getColor(c3)),getColor(c2)/=getColor(c3)) then
+                          if and(getShape(c1) == getShape(c2), getShape(c1)==getShape(c3)) then
+                             if and(getShade(c1) == getShade(c2), getShade(c1)==getShade(c3)) then
+                                if and(getNum(c1) == getNum(c2), getNum(c1)==getNum(c3)) then
+                                   True
+                                else if and(and(getNum(c1) /= getNum(c2), getNum(c1)/=getNum(c3)),getNum(c2)/=getNum(c3)) then
+                                   True
+                                else
+                                   False
+                             else if and(and(getShade(c1) /= getShade(c2), getShade(c1)/=getShade(c3)),getShade(c2)/=getShade(c3)) then
+                                if and(getNum(c1) == getNum(c2), getNum(c1)==getNum(c3)) then
+                                   True
+                                else if and(and(getNum(c1) /= getNum(c2), getNum(c1)/=getNum(c3)),getNum(c2)/=getNum(c3)) then
+                                   True
+                                else
+                                   False
+                              else
+                                 False
+                          else if and(and(getShape(c1) /= getShape(c2), getShape(c1)/=getShape(c3)),getShape(c2)/=getShape(c3)) then
+                             if and(getShade(c1) == getShade(c2), getShade(c1)==getShade(c3)) then
+                                if and(getNum(c1) == getNum(c2), getNum(c1)==getNum(c3)) then
+                                   True
+                                else if and(and(getNum(c1) /= getNum(c2), getNum(c1)/=getNum(c3)),getNum(c2)/=getNum(c3)) then
+                                   True
+                                else
+                                   False
+                             else if and(and(getShade(c1) /= getShade(c2), getShade(c1)/=getShade(c3)),getShade(c2)/=getShade(c3)) then
+                                if and(getNum(c1) == getNum(c2), getNum(c1)==getNum(c3)) then
+                                   True
+                                else if and(and(getNum(c1) /= getNum(c2), getNum(c1)/=getNum(c3)),getNum(c2)/=getNum(c3)) then
+                                   True
+                                else
+                                   False
+                              else
+                                 False
+                          else
+                             False
+                       else
+                          False
+-}
+

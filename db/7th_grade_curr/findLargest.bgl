@@ -1,0 +1,23 @@
+game FindLargest
+
+type Input = Int
+
+findLargestRec: (Int, Int) -> (Int, Int)
+findLargestRec(howMany, largest) = let num = input in
+                                if howMany > 0 then
+                                    if num > largest then findLargestRec(howMany-1, num)
+                                    else findLargestRec(howMany-1, largest)
+                                else
+                                    (howMany, largest)
+
+findLargest: (Int, Int) -> (Int, Int)
+findLargest(howMany, largest) = while howMany > 0 do
+											  let num = input in
+                                      if num > largest then (howMany-1, num)
+                                      else (howMany-1, largest)
+
+getLargest: (Int, Int) -> Int
+getLargest(howMany, largest) = largest
+
+printLargest: (Int, Int) -> Int
+printLargest(howMany, largest) = getLargest(findLargestRec(howMany, largest))

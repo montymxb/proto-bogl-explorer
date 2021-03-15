@@ -1,0 +1,48 @@
+-- BoGL: find items on a board
+--
+game FindStuff
+
+type Items = {I}
+
+type Board = Array (5,5) of Items & {Empty} 
+type Pos = (Int, Int)
+type Result = Pos 
+
+maxX : Int
+maxX = 5
+
+maxY : Int
+maxY = 5
+
+
+board : Board
+board!(x,y) = Empty
+board!(5,5) = I
+
+-- Recursive Search
+--
+{-
+searchFrom : Pos -> Pos
+searchFrom(x,y) = if or(and(x>maxX, y>maxY), board!(x,y)==I) then (x,y)
+                else if y<maxY then searchFrom(x, y+1)
+	             else searchFrom(x+1, 1)
+
+
+
+
+searchFrom : Pos -> Pos
+searchFrom(x, y) = while and(x<=maxX,board!(x,y)/=I) do 
+                      while and(y<=maxY, board!(x, y)/=I) do
+					          if(y<maxY) then (x, y+1)
+                         else (x+1, 1)
+-}
+-- Iterative Search
+--
+searchFrom : Pos -> Pos
+searchFrom(x, y) = while and(and(x<=maxX, y<=maxY),board!(x,y)/=I) do 
+					          if(y<maxY) then (x, y+1)
+                         else if (x<maxX) then (x+1, 1)
+                         else (x+1, y+1)
+
+findI : Result
+findI = searchFrom(1, 1)

@@ -1,0 +1,37 @@
+-- BoGL: find items on a board
+--
+game FindStuff
+
+type Items = {I}
+
+type Board = Array (5,1) of Items & {Empty} 
+type Pos = Int 
+type Result = Pos & {NotFound}
+
+maxX : Int
+maxX = 5
+
+board : Board
+board!(x,y) = Empty
+board!(2,1) = I
+
+-- Recursive Search
+--
+{-
+searchFrom : Pos -> Result
+searchFrom(x) = if x>maxX then NotFound
+           else if board!(x,1) == I then x
+	   else searchFrom (x+1)
+
+findI : Result
+findI = searchFrom(1)
+-}
+
+-- Iterative Search
+--
+searchFrom : Int -> Int
+searchFrom(x) = while and(x<=maxX,board!(x,1)/=I) do x+1
+
+findI : Result
+findI = let x = searchFrom(1) in
+             if x>maxX then NotFound else x

@@ -1,0 +1,71 @@
+--Develop this based on the Algorithm we developed
+--Algorithm: Play Nim with only one heap of N objects and 2 players
+---------------------------------------------------------------------------------------
+--What type of information do we get as input and output
+--Input: number of objects in our heap (heap), objects to remove from the heap (objectsToRemove), which are both an Integer value
+--Integer can be any whole number and is algready defined
+
+--Output: winner, which is a Player
+--Player can be the player going first or second {Player1Name, Player2Name}
+---------------------------------------------------------------------------------------
+--Name of the function/task and the type of information that is input and output
+--playNim: Player, Int -> Player
+
+--Definition of the task/function that does not take input, but gets input in task
+--playNim (curPlayer, heap):
+--   WHILE the heap is not equal to 0 DO
+--       Get objectsToRemove from curPlayer
+--       Remove objectsToRemove from heap
+--       Switch curPlayer to the next player 
+--   Output who took the last object as the winner
+
+game NIMv2
+type Player = {Player1Name, Player2Name}
+-- We can think of Nim as a board game with a heap of N objects on one spot on the board
+type Board = Array(1, 1) of Int  -- A grid/array with only one spot/location
+type Input = Int
+
+-- If we have a board, then we have to initial the board, (x, y) indicates all cells
+-- You could indicate (2, y), which would be all rows on the second column.
+initBoard: Board
+initBoard!(x, y) = 0
+
+getObjectsToRemove: Board -> Int
+getObjectsToRemove(heap) =
+   let objectsToRemove = input in
+   if or(objectsToRemove < 1, or(objectsToRemove > 3, objectsToRemove > (heap!(1,1)))) then
+      getObjectsToRemove(heap)
+   else
+      objectsToRemove
+
+-- Removing objects means accessing what is there, subtracting the number to remove, and then 
+-- placing the new amount back onto the board/heap.
+removeObjects: (Int, Board) -> Board
+removeObjects(objectsToRemove, heap) = place((heap!(1,1) - objectsToRemove), heap, (1,1))
+
+switchPlayer: Player -> Player
+switchPlayer(curPlayer) =
+   if curPlayer == Player1Name then
+	   Player2Name 
+   else
+	   Player1Name 
+
+getPlayer: (Board, Player) -> Player
+getPlayer(heap, player) = player
+
+play: (Board, Player) -> (Board, Player)
+play(heap, curPlayer) =
+-- you access a location on the board using the array_name!(col, row) with col and row starting at 1, not 0
+   while heap!(1, 1) /= 0 do (
+      let objects=getObjectsToRemove(heap) in 
+         removeObjects(objects, heap), 
+         switchPlayer(curPlayer)
+   )
+
+-- since you cannot send input to the initial board function, then you have to place the objects on the board
+-- place() is a predefined function that takes what to place on the board, the board, and the location on the
+-- board where to place it.
+playNim: (Int, Player) -> Player
+playNim(numObjects, curPlayer) = let heap = place(numObjects, initBoard, (1, 1)) in 
+                                 let playInfo = play(heap, curPlayer) in 
+                                     switchPlayer(getPlayer(playInfo))

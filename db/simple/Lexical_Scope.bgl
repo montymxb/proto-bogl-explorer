@@ -1,5 +1,3 @@
--- if eleven = 11 then we have lexical-scope (good)
--- if eleven = 20, then we have dynamic scope (bad)
 game Scope
 
 x : Int
@@ -17,5 +15,6 @@ eleven = f(10)
 g : Int -> Int
 g(y) = x + y
 
+-- eleven = 11 due to lexical scope
 eleven' : Int
 eleven' = let x = 10 in g(10)

@@ -29,9 +29,9 @@
     for(key in s) {
       if(s[key]["attrs"].length > 0) {
         let c = code(s[key]["code"]);
-        let a = "* This program introduces the concepts " + s[key]["attrs"].join(", ");
+        let a = "* This program introduces the concepts " + s[key]["attrs"].map((s) => s.replaceAll(/_/gi," ")).join(", ");
         if(s[key]["attrs"].length == 1) {
-          a = "* This program introduces the concept " + s[key]["attrs"][0];
+          a = "* This program introduces the concept of " + s[key]["attrs"].map((s) => s.replaceAll(/_/gi," "))[0];
         }
         r += "<h3>" + key.replaceAll(/_/gi, " ") + "</h3><span class='attr'>" + a + "</span><div class='code'>" + c + "</div>";
       }
@@ -137,7 +137,13 @@
 
     let e = document.getElementById("search")
     e.addEventListener("click",() => {
-      mkPOST("/api",{
+      let endpoint = "/api";
+      if(window.location.protocol === "file:") {
+        // switch to local endpoint for testing
+        endpoint = "http://localhost:8181/api";
+      }
+
+      mkPOST(endpoint,{
         knownProg: document.getElementById("codearea1").value,
         goalProg: document.getElementById("codearea2").value
       })
