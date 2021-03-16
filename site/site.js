@@ -133,9 +133,9 @@
     d3Grapher = d3.select("#graph").graphviz({
       width: "100vw",
       //height: "500",
-      //fit: false,
+      fit: true,
       zoom: false, // zoom disabled for now, it's often buggy
-      zoomScaleExtent: [0.7,3],
+      zoomScaleExtent: [0.7,1],
       zoomTranslateExtent: [[-1000, -1000], [1000, 1000]]
     }).fade(true)
       .growEnteringEdges(true);
