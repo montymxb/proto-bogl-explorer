@@ -1,4 +1,0 @@
-game Example
-
-dub : Int -> Int
-dub(x) = x*2

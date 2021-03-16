@@ -1,0 +1,14 @@
+game Simplest
+
+-- the simplest program you can write in BoGL
+-- just 'game' and the name of the game starting with a capital letter
+-- these are comments, which just describe things, but aren't code
+
+-- they can be listed like this
+
+{-
+or,
+they can be listed
+in a block
+like this
+-}

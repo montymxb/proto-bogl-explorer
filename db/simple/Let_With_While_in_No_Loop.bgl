@@ -1,4 +1,5 @@
-game Example
+game LetWhileNoLoop
 
-w : Bool
-w = let z = True in while False do z
+-- does not loop
+noloop : Bool
+noloop = let z = True in while False do z

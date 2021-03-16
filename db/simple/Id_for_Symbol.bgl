@@ -1,0 +1,7 @@
+game IdSymbol
+
+type Fruit = {Banana,Apple,Pear}
+
+-- returns what it's given
+id : Fruit -> Fruit
+id(f) = f

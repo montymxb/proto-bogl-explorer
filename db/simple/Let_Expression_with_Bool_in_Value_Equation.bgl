@@ -1,4 +1,0 @@
-game Example
-
-v : Bool
-v = let x = True in x

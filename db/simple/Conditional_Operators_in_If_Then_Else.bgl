@@ -1,0 +1,4 @@
+game CondOpIfThenElse
+
+v : Bool
+v = if True == False then True else False

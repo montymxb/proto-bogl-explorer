@@ -1,4 +1,4 @@
-game While
+game VariousWhiles
 
 type Board = Array(3,3) of Int
 type Input = Int

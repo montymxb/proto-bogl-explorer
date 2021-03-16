@@ -1,0 +1,19 @@
+game RelationalOperators
+
+eq : Bool
+eq = True == True
+
+neq : Bool
+neq = 1 /= 2
+
+gt : Bool
+gt = 2 > 1
+
+gte : Bool
+gte = 2 >= 2
+
+lt : Bool
+lt = 1 < 2
+
+lte : Bool
+lte = 2 <= 2

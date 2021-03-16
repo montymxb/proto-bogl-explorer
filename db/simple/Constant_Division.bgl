@@ -1,0 +1,4 @@
+game ConstantDivision
+
+v : Int
+v = 10 / 2

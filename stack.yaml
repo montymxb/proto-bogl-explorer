@@ -53,7 +53,7 @@ extra-deps:
 - git: https://github.com/The-Code-In-Sheep-s-Clothing/bogl.git
   commit: 16c5bf00b2e44a5380f3f67604a22a9671e0eb37
 - git: git@github.com:montymxb/ConceptGraph.git
-  commit: 5738dd3967c2d674412f25c02b2352152c439eb6
+  commit: 15e4dc9970e6e3c9600d5eb70811e2c34249e655
 
 # Override default flag values for local packages and extra-deps
 # flags: {}

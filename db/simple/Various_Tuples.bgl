@@ -1,5 +1,5 @@
 -- functions for testing nested tuple behavior
-game Tuples
+game VariousTuples
 
 type Pair = (Int, Int)
 

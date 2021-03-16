@@ -1,0 +1,4 @@
+game MakeIntTuple
+
+f : Int -> (Int,Int)
+f(x) = (x,x)

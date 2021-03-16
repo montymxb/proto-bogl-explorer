@@ -1,6 +1,6 @@
 -- A basic test that subtyping and type synonyms work as exepected
 -- i.e. subtyping is similar to a subset relation
-game G
+game SubTypes
 
 type TA = {A}
 type TB = {B}

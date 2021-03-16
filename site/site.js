@@ -23,23 +23,27 @@
   // adds a fringe element
   function populateFringe(s) {
 
-    let r = "<p id='count'>" + Object.keys(s).length + " results</p>";
+    let r = "<p id='count'>found " + Object.keys(s).length + " next programs</p>";
+    if(Object.keys(s).length == 1) {
+      r = "<p id='count'>found 1 next program</p>";
+    }
+
     let key = "";
     console.dir(s)
     for(key in s) {
       if(s[key]["attrs"].length > 0) {
         let c = code(s[key]["code"]);
-        let a = "* This program introduces the concepts " + s[key]["attrs"].map((s) => s.replaceAll(/_/gi," ")).join(", ");
+        let a = "This program introduces the concepts: " + s[key]["attrs"].map((s) => "<span class='attr'>" + s.replaceAll(/_/gi," ") + "</span>").join(", ");
         if(s[key]["attrs"].length == 1) {
-          a = "* This program introduces the concept of " + s[key]["attrs"].map((s) => s.replaceAll(/_/gi," "))[0];
+          a = "This program introduces the concept of " + s[key]["attrs"].map((s) => "<span class='attr'>" + s.replaceAll(/_/gi," ") + "</span>")[0];
         }
-        r += "<h3>" + key.replaceAll(/_/gi, " ") + "</h3><span class='attr'>" + a + "</span><div class='code'>" + c + "</div>";
+        r += "<div class='item'><h3>" + key.replaceAll(/_/gi, " ") + "</h3><h4 class='attrs'>" + a + "</h4><div class='code'>" + c + "</div></div>";
       }
     }
     for(key in s) {
       if(s[key]["attrs"].length == 0) {
         let c = code(s[key]["code"]);
-        r += "<h3>" + key.replaceAll(/_/gi, " ") + "</h3><span class='attr'></span><div class='code'>" + c + "</div>";
+        r += "<h3>" + key.replaceAll(/_/gi, " ") + "</h3><div class='code'>" + c + "</div>";
       }
     }
     document.getElementById("results").innerHTML = r;
@@ -128,9 +132,9 @@
 
     d3Grapher = d3.select("#graph").graphviz({
       width: "100vw",
-      height: "500",
-      fit: true,
-      zoom: false,
+      //height: "500",
+      //fit: false,
+      zoom: false, // zoom disabled for now, it's often buggy
       zoomScaleExtent: [0.7,3],
       zoomTranslateExtent: [[-1000, -1000], [1000, 1000]]
     }).fade(true)

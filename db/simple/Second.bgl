@@ -1,0 +1,4 @@
+game Second
+
+snd : (Int,Int) -> Int
+snd(x,y) = y

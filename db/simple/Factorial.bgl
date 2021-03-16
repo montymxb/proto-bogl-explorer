@@ -1,4 +1,7 @@
-game Example
+game Factorial
 
 fact : Int -> Int
-fact(x) = if x > 1 then x * fact(x-1) else 1
+fact(x) = if x > 1 then
+            x * fact(x-1)
+          else
+            1

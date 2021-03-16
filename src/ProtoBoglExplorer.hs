@@ -77,7 +77,9 @@ protoBoglExplorer kProg gProg = do
                                     Nothing    -> [])) nps'
   let npsf = map (\(a,b,c) -> (pack a, Object $ HM.fromList [(pack "code",String $ pack b),(pack "attrs", Array $ Vect.fromList (map (String . pack) c))])) nps2
 
-  let lpk = leftProgs kn
-  return $ case length lpk of
+  let lerrs = leftProgs kn ++ leftProgs gn
+  let lpk = if kProg /= "" then length $ leftProgs kn else 0
+  let lpg = if gProg /= "" then length $ leftProgs gn else 0
+  return $ case lpk + lpg of
     0 -> Object $ HM.fromList $ (pack "content", String $ pack dotContent) : npsf
-    _ -> Object $ HM.fromList [(pack "error", String $ pack $ show $ snd $ head lpk)]
+    _ -> Object $ HM.fromList [(pack "error", String $ pack $ show $ snd $ head lerrs)]

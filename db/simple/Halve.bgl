@@ -1,0 +1,4 @@
+game Halve
+
+halve : Int -> Int
+halve(x) = x/2

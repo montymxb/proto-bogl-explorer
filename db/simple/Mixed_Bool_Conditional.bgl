@@ -1,0 +1,4 @@
+game Mixed
+
+v : Bool
+v = False == True

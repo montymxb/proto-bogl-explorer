@@ -1,4 +1,4 @@
-game Example
+game InfiniteRecursion
 
-r : Int -> Int
-r(x) = r(x+1)
+infinite : Int -> Int
+infinite(x) = infinite(x+1)

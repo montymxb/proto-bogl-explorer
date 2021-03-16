@@ -1,6 +1,6 @@
-game T
+game GetIntInput
 
 type Input = Int
 
-v : Int
-v = input
+getAnInt : Int
+getAnInt = input

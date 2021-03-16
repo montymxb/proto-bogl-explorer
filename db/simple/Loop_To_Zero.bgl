@@ -1,0 +1,4 @@
+game LoopToZero
+
+toZero : Int -> Int
+toZero(x) = while x > 0 do x - 1

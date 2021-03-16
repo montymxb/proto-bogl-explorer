@@ -1,4 +1,4 @@
-game T
+game ManyFunctionApps
 
 app1 : Int -> Int
 app1(x) = x * 2
@@ -6,5 +6,5 @@ app1(x) = x * 2
 app2 : Int -> Int
 app2(x) = x + 2
 
-f29 : Int -> Int
-f29(x) = app1(x) + app2(x)
+f : Int -> Int
+f(x) = app1(x) + app2(x)

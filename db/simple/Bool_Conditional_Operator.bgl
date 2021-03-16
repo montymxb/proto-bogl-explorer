@@ -1,0 +1,4 @@
+game ConditionalBool
+
+v : Bool
+v = False == False

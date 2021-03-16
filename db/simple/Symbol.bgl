@@ -1,0 +1,9 @@
+game Symbol
+
+type T = {A,B}
+
+x : T
+x = A
+
+y : T
+y = B

@@ -1,4 +1,0 @@
-game Example
-
-wh : Int -> Int
-wh(x) = while x > 0 do x - 1

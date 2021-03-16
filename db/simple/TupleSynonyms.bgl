@@ -1,4 +1,4 @@
-game TestTupleSynonyms
+game TupleSynonyms
 
 type T = Int
 

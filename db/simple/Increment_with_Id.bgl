@@ -1,4 +1,4 @@
-game T
+game IncWithId
 
 id : Int -> Int
 id(x) = x

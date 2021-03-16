@@ -1,4 +1,4 @@
-game B
+game IfThenElseBoard
 
 type Board = Array(3,3) of Int
 

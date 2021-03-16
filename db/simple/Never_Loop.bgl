@@ -1,4 +1,4 @@
-game Example
+game NeverLoop
 
 -- does not loop
 -- works just like 'id'

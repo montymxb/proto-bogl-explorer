@@ -20,8 +20,19 @@
       <ol style="color:#444;display:block;margin:8px auto;max-width:50vw;padding:8px">
         <li>Enter a <span class="b">Known</span> BoGL program in the top box.</li>
         <li><span class="i">(optional)</span> Enter a <span class="b">Goal</span> BoGL program you <span class="i">want</span> to know in the bottom box.</li>
-        <li>Click <span class="b">Search</span> to see the next programs to learn.</li>
-        <li>Next programs you can learn are listed below by: name, concepts they introduce, and their code.</li>
+        <li>Click <span class="b">Search</span> to see the next programs you can learn.</li>
+        <li>Next programs you can learn are listed below by <span class="purp">name</span>, <span class="orang">concepts</span> they introduce, and their <span class="codedemo" style="display:inline;padding:0;">content</span>; see the following example:
+          <div class='item'>
+            <h3>Program Name</h3>
+            <h4 class='attrs'>This program introduces the concepts: <span class='attr'>A</span>,<span class='attr'>B</span>,<span class='attr'>C</span></h4>
+            <div class='code codedemo'>...program content that uses concepts A,B,C...</div>
+          </div>
+        </li>
+        <li>
+          Below the programs a graph shows the relationship between your <span class="b">Known</span> and <span class="b">Goal</span> programs.
+          The top of the graph being your known program, and the bottom being your goal.
+          The directed edges are followed to determine <span class="orang">concepts</span> and <span class="purp">programs</span> that show up in your search results.
+        </li>
       </ol>
       <textarea id="codearea1" name="known" class='code codearea' editable="true" placeholder="game KnownExample" autocorrect="off">game KnownExample</textarea>
       <textarea id="codearea2" name="goal" class='code codearea' editable="true" placeholder="game ExampleToCompareWith" autocorrect="off"></textarea>

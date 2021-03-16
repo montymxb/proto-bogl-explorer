@@ -107,28 +107,52 @@ textarea:focus {
   padding: 8px;
 }
 
-#results h3 {
+h3 {
   font-size: 30px;
   font-weight: 300px;
-  color: #111;
+  /*color: #111;*/
+  color: purple;
   margin: 8px auto;
   margin-right: 16px;
   display: inline-block;
+}
+
+.purp {
+  color: purple;
+}
+
+.orang {
+  color: darkorange;
 }
 
 .code {
   font-family: "Inconsolata", monospace;
 }
 
-#results .code {
-  color: #333;
+#results .code,.codedemo {
+  color: #555;
   font-size: 16px;
   margin-bottom: 32px;
+  background-color: #f7f7f7;
+  border-radius: 4px;
+  padding: 8px;
 }
 
-#results .attr {
+.attrs {
   font-size: 14px;
-  color: #999;
+  margin: 8px 0 8px 0;
+}
+
+.attr {
+  color: darkorange;
+}
+
+.item {
+  /*
+  border-style: none none none solid;
+  border-width: 2px;
+  border-color: #aaa;
+  */
 }
 
 @keyframes spinner {

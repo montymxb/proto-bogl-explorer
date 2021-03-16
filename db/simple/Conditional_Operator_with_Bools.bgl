@@ -1,0 +1,4 @@
+game CondOpBools
+
+v : Bool
+v = True == True

@@ -1,4 +1,0 @@
-game Example
-
-f : Int -> (Int,Int)
-f(x) = (x,x)

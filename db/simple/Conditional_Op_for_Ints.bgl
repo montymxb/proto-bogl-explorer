@@ -1,0 +1,4 @@
+game ConditionalOpForInts
+
+v : Bool
+v = 5 == 2

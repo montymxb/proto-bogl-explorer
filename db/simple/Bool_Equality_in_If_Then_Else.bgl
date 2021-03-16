@@ -1,4 +1,0 @@
-game Example
-
-v : Bool
-v = if True == False then True else False

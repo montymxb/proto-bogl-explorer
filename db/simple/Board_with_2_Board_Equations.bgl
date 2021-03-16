@@ -1,4 +1,4 @@
-game B
+game TwoBoardEquations
 
 type Board = Array(3,3) of Int
 

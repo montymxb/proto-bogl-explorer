@@ -1,6 +1,0 @@
-game Example
-
-type T={A,B}
-
-v : Bool
-v = or(A == B, True == False)
