@@ -25,17 +25,6 @@ packages:
       sha256: 674243e0470949fa81a6025ae0ddb1c52c48cffbf163249868563ec826eaadc5
   original:
     hackage: partial-order-0.2.0.0@sha256:a0d6ddc9ebcfa965a5cbcff1d06d46a79d44ea5a0335c583c2a51bcb41334487,2275
-- completed:
-    name: ConceptGraph
-    version: 0.2.0.0
-    git: git@github.com:montymxb/ConceptGraph.git
-    pantry-tree:
-      size: 12278
-      sha256: 0c946d7062801ead73f1c7199a91eb170a32a03b1513af22b92f57aa5a74a3fe
-    commit: 15e4dc9970e6e3c9600d5eb70811e2c34249e655
-  original:
-    git: git@github.com:montymxb/ConceptGraph.git
-    commit: 15e4dc9970e6e3c9600d5eb70811e2c34249e655
 snapshots:
 - completed:
     size: 565266
