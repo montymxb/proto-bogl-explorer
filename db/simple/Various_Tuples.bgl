@@ -1,6 +1,10 @@
 -- functions for testing nested tuple behavior
 game VariousTuples
 
+--
+-- A collection of various tuples for testing your understanding
+--
+
 type Pair = (Int, Int)
 
 type Board = Array (3,3) of Int

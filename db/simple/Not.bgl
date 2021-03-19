@@ -1,4 +1,7 @@
 game Not
 
-nt : Bool -> Bool
-nt(x) = if x then False else True
+f : Bool
+f = not(True)
+
+t : Bool
+t = not(False)

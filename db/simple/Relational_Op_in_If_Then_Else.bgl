@@ -1,4 +1,4 @@
-game Example
+game RelationalIfThenElse
 
 v : Bool
 v = if 1 == 1 then True else False

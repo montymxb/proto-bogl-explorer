@@ -1,4 +1,4 @@
-game Subtraction
+game Subtractionn
 
-sub : (Int,Int) -> Int
-sub(x,y) = x-y
+v : Int
+v = 1 - 1

@@ -1,4 +1,4 @@
 game LessThan
 
-lt : (Int,Int) -> Bool
-lt(x,y) = x < y
+v : Bool
+v = 5 < 2

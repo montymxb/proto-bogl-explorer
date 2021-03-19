@@ -1,4 +1,0 @@
-game First
-
-fst : (Int,Int) -> Int
-fst(x,y) = x

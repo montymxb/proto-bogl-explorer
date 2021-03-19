@@ -1,4 +1,4 @@
-game NestedLets
+game AddWithLets
 
 nested : Int -> Int
 nested(x) = let a = 2 in

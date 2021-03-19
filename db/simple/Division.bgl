@@ -1,4 +1,4 @@
 game Division
 
-div : (Int,Int) -> Int
-div(x,y) = x/y
+v : Int
+v = 10 / 2

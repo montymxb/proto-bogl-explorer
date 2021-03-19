@@ -1,4 +1,8 @@
-game VariousWhiles
+game VariousExamples
+
+--
+-- Various examples to test your understanding
+--
 
 type Board = Array(3,3) of Int
 type Input = Int

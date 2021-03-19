@@ -21,17 +21,17 @@ removeObjects(whichHeap, objectsToRemove, heap)= place((heap!(whichHeap,1) - obj
 switchPlayer: Player -> Player
 switchPlayer(curPlayer) =
    if curPlayer == Player1Name then
-	   Player2Name 
+	   Player2Name
    else
-	   Player1Name 
+	   Player1Name
 
 areHeapsEmpty: (Board, Int) -> Bool
-areHeapsEmpty(heap, x) = 
-   if heap!(x,1) /= 0 then 
+areHeapsEmpty(heap, x) =
+   if heap!(x,1) /= 0 then
       False
-   else if x==1 then 
+   else if x==1 then
       True
-   else 
+   else
       areHeapsEmpty(heap, x-1)
 
 
@@ -45,15 +45,15 @@ getHeapChoice(heap, numHeaps) =
 
 
 play: (Board, Int, Player) -> (Board, Int, Player)
-play(heap, numHeaps, curPlayer) = 
+play(heap, numHeaps, curPlayer) =
    while not(areHeapsEmpty(heap, numHeaps)) do (
          let whichHeap=getHeapChoice(heap, numHeaps) in
-         let objects=getObjectsToRemove(heap, whichHeap) in 
+         let objects=getObjectsToRemove(heap, whichHeap) in
          removeObjects(whichHeap, objects, heap), numHeaps,
          switchPlayer(curPlayer)
    )
-   
-getPlayer: (Board, Int, Player) -> (Board, Int, Player)
+
+getPlayer: (Board, Int, Player) -> Player
 getPlayer(heap, numHeaps, curPlayer) = curPlayer
 
 playNim: (Board, Int, Player) -> Player

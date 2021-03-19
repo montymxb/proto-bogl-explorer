@@ -17,6 +17,7 @@
   function code(c) {
     c = c.replaceAll(/\n/gi, '<br/>');
     c = c.replaceAll(/\t/gi, '&nbsp;&nbsp;&nbsp;&nbsp;');
+    c = c.replaceAll(/\s\s/gi, '&nbsp;&nbsp;');
     return c;
   }
 
@@ -29,7 +30,22 @@
     }
 
     let key = "";
-    console.dir(s)
+
+    for(key in s) {
+      if(s[key]["attrs"].length > 0) {
+        let c = code(s[key]["code"]);
+        let a = "This program introduces the concepts: " + s[key]["attrs"].map((s) => "<span class='attr'>" + s.replaceAll(/_/gi," ") + "</span>").join(", ");
+        if(s[key]["attrs"].length == 1) {
+          a = "This program introduces the concept of " + s[key]["attrs"].map((s) => "<span class='attr'>" + s.replaceAll(/_/gi," ") + "</span>")[0];
+        }
+        r += "<div class='item'><h3>" + key.replaceAll(/_/gi, " ") + "</h3><h4 class='attrs'>" + a + "</h4><div class='code'>" + c + "</div></div>";
+      } else {
+        let c = code(s[key]["code"]);
+        r += "<h3>" + key.replaceAll(/_/gi, " ") + "</h3><div class='code'>" + c + "</div>";
+      }
+    }
+
+    /*
     for(key in s) {
       if(s[key]["attrs"].length > 0) {
         let c = code(s[key]["code"]);
@@ -46,6 +62,8 @@
         r += "<h3>" + key.replaceAll(/_/gi, " ") + "</h3><div class='code'>" + c + "</div>";
       }
     }
+    */
+
     document.getElementById("results").innerHTML = r;
   }
 

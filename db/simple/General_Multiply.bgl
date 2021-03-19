@@ -1,4 +1,4 @@
-game MultInts
+game GeneralMultiply
 
 mul : (Int,Int) -> Int
 mul(x,y) = x*y

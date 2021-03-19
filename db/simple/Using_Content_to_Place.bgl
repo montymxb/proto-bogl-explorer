@@ -4,10 +4,11 @@ game ContentPlace
 -- Content = Int
 type Board = Array (3,3) of Int
 
-positive : Board
-positive!(x,y) = 1
+ourBoard : Board
+ourBoard!(x,y) = 1
 
 -- Content describes the type of the pieces on the board
 -- which are 'Int', as noted above ^
-placePositive : (Content, Board, (Int, Int)) -> Board
-placePositive(c, b, p) = if c > 0 then place(c, b, p) else b
+-- this function only places a value of 'Content' if it is > 0
+placeIfPositive : (Content, Board, (Int, Int)) -> Board
+placeIfPositive(c, b, p) = if c > 0 then ourBoard(c, b, p) else b

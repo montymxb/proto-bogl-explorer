@@ -1,4 +1,4 @@
-game NestedLets
+game NestedLetExpressions
 
 v : Int
 v = let x = 2 in
