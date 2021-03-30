@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Proto BoGL Explorer</title>
+  <meta charset="utf-8">
+  <script src="d3.v5.min.js"></script>
+  <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
+  <script src="d3-graphviz.js"></script>
+  <link href="site.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+  <div id='main'>
+    <div id='wrap'>
+      <img id="prim-img" src="favicon.ico" width="150" height="150" alt="BoGL Icon">
+      <h1 id='title'>Simple BoGL Programs</h1>
+      <div id="results">
+<h4>Less Than</h4><div class='code'>game LessThan
+
+v : Bool
+v = 5 < 2
+</div>
+<h4>Add and Subtract</h4><div class='code'>game AddSub
+
+v : Int
+v = 1 + 2 - 1
+</div>
+<h4>Relational Operators in If Then Else</h4><div class='code'>game RelationalOpIfThenElse
+
+v : Bool
+v = if True == False then True else False
+</div>
+<h4>Let Expression for Board Equation</h4><div class='code'>game LetBoard
+
+type Board = Array(1,1) of Int
+
+b : Board
+b!(x,y) = let q = 5 in q
+</div>
+<h4>General Multiply</h4><div class='code'>game GeneralMultiply
+
+mul : (Int,Int) -> Int
+mul(x,y) = x*y
+</div>
+<h4>Pick Second in Tuple</h4><div class='code'>game PickSnd
+
+pick2nd : ((Bool,Bool),Bool) -> Bool
+pick2nd(x,y) = y
+</div>
+<h4>GeneralSubtraction</h4><div class='code'>game GeneralSubtraction
+
+sub : (Int,Int) -> Int
+sub(x,y) = x-y
+</div>
+<h4>Not Equal Ints</h4><div class='code'>game NEQInts
+
+v : Bool
+v = 1 /= 2
+</div>
+<h4>Nested Let Expressions</h4><div class='code'>game NestedLetExpressions
+
+v : Int
+v = let x = 2 in
+    let y = 3 in
+    x + y - 1
+</div>
+<h4>Second</h4><div class='code'>game Second
+
+-- gets the 2nd value in a tuple
+snd : (Int,Int) -> Int
+snd(x,y) = y
+</div>
+<h4>Decrement</h4><div class='code'>game Decrement
+
+dec : Int -> Int
+dec(x) = x-1
+</div>
+<h4>Simplest</h4><div class='code'>game Simplest
+
+-- the simplest program you can write in BoGL
+-- just 'game' and the name of the game starting with a capital letter
+-- these are comments, which just describe things, but aren't code
+
+-- they can be listed like this
+
+{-
+or,
+they can be listed
+in a block
+like this
+-}
+</div>
+<h4>Subtraction</h4><div class='code'>game Subtractionn
+
+v : Int
+v = 1 - 1
+</div>
+<h4>Various Examples</h4><div class='code'>game VariousExamples
+
+--
+-- Various examples to test your understanding
+--
+
+type Board = Array(3,3) of Int
+type Input = Int
+
+type Player = {X,Y}
+
+lessThanTen : Int -> Bool
+lessThanTen(x) = x < 10
+
+weirdAdd : (Int, Int) -> (Int, Int)
+weirdAdd(x,y) = (x + y, y)
+
+namedWhileStep : (Int, Int) -> (Int, Int)
+namedWhileStep(x, step) = while lessThanTen(x) do weirdAdd(x, step)
+
+succ : Int -> Int
+succ(n) = n + 1
+
+inf : Int -> Int
+inf(n) = while True do succ(n)
+
+identity : Int -> Int
+identity(n) = while False do succ(n)
+
+incr : Int -> Int
+incr(x) = x + 1
+
+whileTest : Int -> Int
+whileTest(x) = while lessThanTen(x) do incr(x)
+
+false : Bool
+false = let b = True in while b do False
+
+-- a while loop that gets its local, mutable context from a function
+toTenF : Int -> Int
+toTenF(x) = while x < 10 do x + 1
+
+-- a while loop that gets its local, mutable context from a let expression
+toTenV : Int
+toTenV = let x = 1 in while x < 10 do x + 1
+
+ten1 : Int
+ten1 = toTenV
+
+ten2 : Int
+ten2 = toTenF(1)
+
+-- what if we mix the two?
+-- we get an infinite loop, if we aren't careful
+-- the let expression context shadows the function context when parsing the while loop's local context
+mixed : Int -> Int
+mixed(x) = let a = 1 in while x < 10 do x + 1
+
+-- here we use x as the step size
+mixedWell : Int -> Int
+mixedWell(x) = let a = 1 in (while a < 10 do a + x)
+
+ten3 : Int
+ten3 = mixedWell(1)
+
+-- a use case for mixing the two is illustrated below:
+-- this example is commented out because there is a type error (note: the error message is wrong)
+-- a while loop like this has to have type FunctionInput -> FunctionInput
+--badCounter : (Int, Int) -> Int
+--badCounter(count, step) = while count < 10 do count + step
+
+-- this works, but it is a bit cumbersome to use the result (we have to extract the first element of the tuple)
+betterCounter : (Int, Int) -> (Int, Int)
+betterCounter(count, step) = while count < 10 do (count + step, step)
+
+tenOne : (Int, Int)
+tenOne = betterCounter(1,1)
+
+-- we can get around this by using a let-context
+counter : (Int, Int) -> Int
+counter(start, step) = let x = start in while x < 10 do x + step
+
+ten4 : Int
+ten4 = counter(1, 1)
+
+-- what if we use two loops?
+-- the left loop starts with x = 1
+-- the right loop also starts with x = 1
+-- result: 30 (not 20!)
+twoLoops : Int
+twoLoops = let x = 1 in (while x < 10 do x + 1) + (while x < 10 do x + 19)
+
+thirty : Int
+thirty = twoLoops
+
+-- here we thread the result of the first loop to the second and the result is 20
+twoLoops2 : Int -> Int
+twoLoops2(x) = let y = (while x < 10 do x + 1) in y + (while y < 10 do y + 1)
+
+twenty : Int
+twenty = twoLoops2(1)
+
+-- what if we use x outside the loop?
+-- the loop has no effect on the outer x
+-- result: 11 (not 20!)
+out : Int
+out = let x = 1 in (while x < 10 do x + 1) + x
+
+eleven : Int
+eleven = out
+
+-- how about nested let expressions?
+-- let a = 10 has no effect on the do-expression
+n : Int
+n = let x = 1 in while let a = 10 in x < 5 do x + 1
+
+five : Int
+five = n
+
+-- this will never terminate!
+-- a let variable is only mutable in a while loop that shares its scope
+-- and even in that case, the mutable variable is actually different from the let variable (see out)
+-- x is the only mutable variable and it is stuck at i + 1 = 2
+n2 : Int
+n2 = let x = 1 in while x < 10 do let i = 1 in i + 1
+
+-- this fixes the above problem. x is mutable in the outer loop, i is mutable in the inner loop
+-- x = i = 15
+n3 : Int
+n3 = let x = 1 in while x < 10 do let i = 1 in while i < 15 do i + 1
+
+fifteen : Int
+fifteen = n3
+
+-- another infinite loop!
+-- x is not mutable in the inner loop
+n4 : Int
+n4 = let x = 1 in while x < 10 do let i = 1 in while x < 15 do x + 1
+
+-- a final example
+-- what is the value of f(1)?
+f : Int -> Int
+f(x) = (while x < 10 do 2 * x) + (let x = 3 in while x < 10 do 2 * x) + x
+
+twentyNine : Int
+twentyNine = f(1)
+</div>
+<h4>Let With While in No Loop</h4><div class='code'>game LetWhileNoLoop
+
+-- does not loop
+noloop : Bool
+noloop = let z = True in while False do z
+</div>
+<h4>If Then Else Not Equal with Symbols</h4><div class='code'>game IfThenElseNEQ
+
+type T = {A,B}
+
+f : T -> T
+f(x) = if x /= A then B else A
+</div>
+<h4>Add with Lets</h4><div class='code'>game AddWithLets
+
+nested : Int -> Int
+nested(x) = let a = 2 in
+            let b = 3 in
+            x + a + b
+</div>
+<h4>Loop up to 10</h4><div class='code'>game LoopUpTo10
+
+upTo10 : Int -> Int
+upTo10(x) = while x < 10 do x + 1
+</div>
+<h4>Subtypes</h4><div class='code'>-- A basic test that subtyping and type synonyms work as exepected
+-- i.e. subtyping is similar to a subset relation
+game SubTypes
+
+type TA = {A}
+type TB = {B}
+type TAB = TA & TB
+type TABC = TAB & {C}
+
+type T = Int & TABC
+type TSyn = T
+type TSyn2 = TSyn
+
+a : TA
+a = A
+
+f : TAB -> TAB
+f(x) = x
+
+g : TABC -> TABC
+g(x) = x
+
+h : T -> T
+h(x) = x
+
+a' : TSyn2
+a' = h(g(f(a)))
+
+a'' : T
+a'' = a'
+</div>
+<h4>Greater Than or Equal To</h4><div class='code'>game GreaterThanEqualTo
+
+v : Bool
+v = 5 >= 2
+</div>
+<h4>Id</h4><div class='code'>game Example
+
+-- returns what it is given
+id : Int -> Int
+id(x) = x
+</div>
+<h4>Inc Let Expression</h4><div class='code'>game IncWithLet
+
+inc : Int -> Int
+inc(x) = let y = 1 in x + y
+</div>
+<h4>References</h4><div class='code'>game References
+
+a : Int
+a = 5
+
+b : Int -> Int
+b(x) = x + a
+</div>
+<h4>Not</h4><div class='code'>game Not
+
+f : Bool
+f = not(True)
+
+t : Bool
+t = not(False)
+</div>
+<h4>If Then Else on x</h4><div class='code'>game IfThenElseOnX
+
+f : Int -> Bool
+f(x) = if x > 0 then True else False
+</div>
+<h4>False in If Then Else</h4><div class='code'>game FalseIfThenElse
+
+v : Int
+v = if False then 1 else 0
+</div>
+<h4>Make Int Tuple</h4><div class='code'>game MakeIntTuple
+
+-- ex. f(2) = (2,2)
+f : Int -> (Int,Int)
+f(x) = (x,x)
+</div>
+<h4>Lexical Scope</h4><div class='code'>game Scope
+
+-- this is a challenging program,
+-- but is helpful to understand how BoGL works
+
+x : Int
+x = 1
+
+b : Int
+b = x
+
+f : Int -> Int
+f(x) = x + b
+
+eleven : Int
+eleven = f(10)
+
+g : Int -> Int
+g(y) = x + y
+
+-- eleven = 11 due to lexical scope
+eleven' : Int
+eleven' = let x = 10 in g(10)
+</div>
+<h4>Add Ints</h4><div class='code'>game AddInts
+
+add : (Int,Int) -> Int
+add(x,y) = x+y
+</div>
+<h4>Add Subtract Multiply</h4><div class='code'>game AddSubMult
+
+v : Int
+v = 1 + 5 - 1 * 5
+</div>
+<h4>If Then Else with Symbols</h4><div class='code'>game IfThenElseWithSymbols
+
+type T = {A,B}
+
+f : T -> T
+f(x) = if x == A then B else A
+</div>
+<h4>Halve</h4><div class='code'>game Halve
+
+-- Keep in mind division produces whole Ints in BoGL
+-- no fractions, no decimals
+-- ex. halve(4)  = 2
+--     halve(5)  = 2
+--     halve(10) = 3
+halve : Int -> Int
+halve(x) = x/2
+</div>
+<h4>Various Tuples</h4><div class='code'>-- functions for testing nested tuple behavior
+game VariousTuples
+
+--
+-- A collection of various tuples for testing your understanding
+--
+
+type Pair = (Int, Int)
+
+type Board = Array (3,3) of Int
+type Input = Int
+
+b : Board
+b!(x,y) = 0
+
+isZero : (Pair, Board) -> Bool
+isZero(p, b) = if b ! p == 0 then True else False
+
+isZero' : (Int, Int, Board) -> Bool
+isZero'(x,y,b) = if b ! (x,y) == 0 then True else False
+
+fst : Pair -> Int
+fst(a,b) = a
+
+snd : Pair -> Int
+snd(a,b) = b
+
+foo : (Pair, Pair) -> Pair
+foo(l,r) = (fst(l) + fst(r), snd(l) + snd(r))
+
+bar : (Pair, Int) -> Pair
+bar(p, i) = (fst(p) + snd(p), i)
+
+f : (Int, Int) -> (Int, Int)
+f(x,y) = (x+1, y+1)
+
+g : (Int, Int) -> (Int, Int)
+g(x,y) = (x-1,y-1)
+
+h : (Int, Int) -> (Int, Int)
+h(x,y) = (x*2, y*2)
+
+testing : Int -> Int
+testing(k) = let z = h(g(f((k,k)))) in
+                 fst(z) + snd(z)
+
+id : Pair -> Pair
+id(a,b) = (a,b)
+</div>
+<h4>Let with Add and Subtract</h4><div class='code'>game LetAddSub
+
+addSub : (Int,Int) -> Int
+addSub(x,y) = let z = 1 in x+y - z
+</div>
+<h4>Or</h4><div class='code'>game Or
+
+o : Bool
+o = or(False,True)
+</div>
+<h4>GreaterThan with Tuples</h4><div class='code'>game GreaterThanWithTuples
+
+gt : (Int,Int) -> Bool
+gt(x,y) = x > y
+</div>
+<h4>Simple Board Declaration</h4><div class='code'>game Simple3x3BoardOf1s
+
+type Board = Array(3,3) of Int
+
+b : Board
+b!(x,y) = 1
+</div>
+<h4>Factorial</h4><div class='code'>game Factorial
+
+-- factorial function
+-- ex. 5! = 5 * 4 * 3 * 2 * 1 = 120
+fact : Int -> Int
+fact(x) = if x > 1 then
+            x * fact(x-1)
+          else
+            1
+</div>
+<h4>Symbol</h4><div class='code'>game Symbol
+
+-- 'A' and 'B' are now values of type 'T'
+type T = {A,B}
+
+-- and so we can write two value equations like so:
+x : T
+x = A
+
+y : T
+y = B
+</div>
+<h4>Id for Symbol</h4><div class='code'>game IdSymbol
+
+type Fruit = {Banana,Apple,Pear}
+
+-- returns what it's given
+id : Fruit -> Fruit
+id(f) = f
+</div>
+<h4>Tuple Type</h4><div class='code'>game TupleType
+
+-- A new type 'Pair', which is akin to a pair of Integers
+type Pair = (Int,Int)
+</div>
+<h4>Increment</h4><div class='code'>game Increment
+
+inc : Int -> Int
+inc(x) = x+1
+</div>
+<h4>Using Content to Place</h4><div class='code'>game ContentPlace
+
+-- 3x3 board of Int
+-- Content = Int
+type Board = Array (3,3) of Int
+
+ourBoard : Board
+ourBoard!(x,y) = 1
+
+-- Content describes the type of the pieces on the board
+-- which are 'Int', as noted above ^
+-- this function only places a value of 'Content' if it is > 0
+placeIfPositive : (Content, Board, (Int, Int)) -> Board
+placeIfPositive(c, b, p) = if c > 0 then ourBoard(c, b, p) else b
+</div>
+<h4>GeneralDivision</h4><div class='code'>game GeneralDivision
+
+div : (Int,Int) -> Int
+div(x,y) = x/y
+</div>
+<h4>Addition</h4><div class='code'>game Add
+
+v : Int
+v = 1 + 1
+</div>
+<h4>Let with Multiply</h4><div class='code'>game LetMult
+
+v : Int
+v = let x = 5 * 2 in x
+</div>
+<h4>Increment with Id</h4><div class='code'>game IncWithId
+
+id : Int -> Int
+id(x) = x
+
+increment : Int -> Int
+increment(x) = id(x + 1)
+</div>
+<h4>TupleSynonyms</h4><div class='code'>game TupleSynonyms
+
+type T = Int
+
+type Pair1 = (T,T)
+type Pair2 = Pair1
+type Pair3 = Pair2
+
+f : Pair3 -> Pair3
+f(x,y) = (x,y)
+</div>
+<h4>Let Expression with While</h4><div class='code'>game LetWithWhile
+
+v : Int
+v = let x = 100 in
+    while x > 50 do x / 2
+</div>
+<h4>Infinite Recursion</h4><div class='code'>game InfiniteRecursion
+
+infinite : Int -> Int
+infinite(x) = infinite(x+1)
+</div>
+<h4>General Less Than</h4><div class='code'>game GeneralLessThan
+
+lt : (Int,Int) -> Bool
+lt(x,y) = x < y
+</div>
+<h4>Nested Ifs</h4><div class='code'>game NestedIfs
+
+ifLet : (Int,Bool) -> Int
+ifLet(x,y) = if x > 10 then
+               let y = 2 in
+               x * y
+             else
+               if y == True then
+                 False
+               else
+                 True
+</div>
+<h4>Let with Arithmetic and Conditional</h4><div class='code'>game LetWithArithmeticAndConditional
+
+v : Bool
+v = let x = 5 + 1 * 2 - 3 in x == 0
+</div>
+<h4>If Then Else</h4><div class='code'>game Example
+
+v : Int
+v = if True then 1 else 0
+</div>
+<h4>First from Tuple</h4><div class='code'>game FirstFromTuple
+
+-- get the first element from a tuple
+fst : (Int,Int) -> Int
+fst(x,y) = x
+</div>
+<h4>Id for Bool</h4><div class='code'>game IdBool
+
+-- returns what it's given
+idBool : Bool -> Bool
+idBool(x) = x
+</div>
+<h4>And with Int and Bool</h4><div class='code'>game AndwithIntBool
+
+v : Bool
+v = and(1 == 1, True == False)
+</div>
+<h4>Bool Relational Operator</h4><div class='code'>game RelationalBool
+
+v : Bool
+v = False == False
+</div>
+<h4>Double</h4><div class='code'>game Double
+
+-- doubles an Integer
+double : Int -> Int
+double(x) = x * 2
+</div>
+<h4>Bool Type</h4><div class='code'>game BoolType
+
+type S = Bool
+</div>
+<h4>Always 5</h4><div class='code'>game Always5
+
+always5 : Int -> Int
+always5(x) = 5
+</div>
+<h4>Bool</h4><div class='code'>game SimpleBool
+
+tru : Bool
+tru = True
+
+fls : Bool
+fls = False
+</div>
+<h4>Double Let</h4><div class='code'>game DoubleLet
+
+dlet : Int -> Int
+dlet(x) = let y = 2 in let z = 2 in x*y*z
+</div>
+<h4>Add and Multiply</h4><div class='code'>game AddMult
+
+v : Int
+v = 1 + 2 * 5
+</div>
+<h4>Mixed Bool Relational</h4><div class='code'>game MixedBoolRelationalOp
+
+v : Bool
+v = False == True
+</div>
+<h4>Reference Multiplication</h4><div class='code'>game ReferenceMult
+
+five : Int
+five = 5
+
+multBy5 : Int -> Int
+multBy5(x) = x * five
+</div>
+<h4>Let with Add Mult Subtract</h4><div class='code'>game LetAddMultSub
+
+v : Int
+v = let x = 5 + 1 * 2 - 3 in x
+</div>
+<h4>Make Bool Tuple</h4><div class='code'>game MakeBoolTuple
+
+f : Bool -> (Bool,Bool)
+f(x) = (x,x)
+</div>
+<h4>Bool Board with For All</h4><div class='code'>game BoolBoardForAll
+
+type Board = Array(4,5) of Bool
+
+b : Board
+b!(x,y) = True
+</div>
+<h4>Extended Enumeration</h4><div class='code'>game ExtendedEnum
+
+-- describes 1,2,3,4,.... & Nothing
+type ExtendedInt = Int & {Nothing}
+
+just5 : ExtendedInt
+just5 = 5
+
+nada : ExtendedInt
+nada = Nothing
+</div>
+<h4>Integer</h4><div class='code'>game Integer
+
+v : Int
+v = 0
+</div>
+<h4>Arithmetic Operators</h4><div class='code'>game ArithmeticOperators
+
+v : Int
+v = 1 + 2 - 1 * 5 / 2
+</div>
+<h4>Multiplication</h4><div class='code'>game Mult
+
+v : Int
+v = 2 * 5
+</div>
+<h4>Set Type</h4><div class='code'>game SetType
+
+type S1 = {A,B}
+</div>
+<h4>Get Int Input</h4><div class='code'>game GetIntInput
+
+-- introduces the concept of input
+-- 'input' is a reference that pauses the execution of a program,
+-- and asks for a value of type 'Input'
+
+-- here, you can indicate what that type is
+type Input = Int
+
+-- this value asks for an Int, and whatever Int
+-- it gets is the value it then has.
+-- Everytime this is referenced, it will ask for another value.
+getAnInt : Int
+getAnInt = input
+
+-- asks you for a number, and adds 1 to it
+addOneToYourNumber : Int
+addOneToYourNumber = getAnInt + 1
+
+-- this is the same...
+addOneToYourNumber2 : Int
+addOneToYourNumber2 = input + 1
+</div>
+<h4>Many Function Applications</h4><div class='code'>game ManyFunctionApps
+
+app1 : Int -> Int
+app1(x) = x * 2
+
+app2 : Int -> Int
+app2(x) = x + 2
+
+f : Int -> Int
+f(x) = app1(x) + app2(x)
+</div>
+<h4>Bool Tuple</h4><div class='code'>game BoolTuple
+
+v : (Bool,Bool)
+v = (True,False)
+</div>
+<h4>Not Equal1</h4><div class='code'>game NEQ1
+
+v : Bool
+v = True /= False
+</div>
+<h4>Board with 2 Board Equations</h4><div class='code'>game TwoBoardEquations
+
+type Board = Array(3,3) of Int
+
+b : Board
+b!(x,y) = 1
+b!(2,2) = 0
+</div>
+<h4>Reference</h4><div class='code'>game Reference
+
+a : Int
+a = 5
+
+b : Int
+b = a
+</div>
+<h4>Relational Op in If Then Else</h4><div class='code'>game RelationalIfThenElse
+
+v : Bool
+v = if 1 == 1 then True else False
+</div>
+<h4>Let with Bool</h4><div class='code'>game LetWithBool
+
+v : Bool
+v = let x = True in False
+</div>
+<h4>Loop To Zero</h4><div class='code'>game LoopToZero
+
+-- the while loop repeats while x > 0,
+-- reducing it by 1 each time and checking again whether it should continue looping.
+-- If x <= 0, it does not loop, and you'll get back your value as it is
+toZero : Int -> Int
+toZero(x) = while x > 0 do x - 1
+</div>
+<h4>Never Loop</h4><div class='code'>game NeverLoop
+
+-- does not loop
+-- works just like 'id'
+wh : Int -> Int
+wh(x) = while False do x
+</div>
+<h4>Tuple</h4><div class='code'>game Tuple
+
+v : (Int,Int)
+v = (1,2)
+</div>
+<h4>Board with Index</h4><div class='code'>game BoardWithIndex
+
+type Board = Array(1,1) of Int
+
+b : Board
+b!(1,1) = 8
+</div>
+<h4>Less Than or Equal To</h4><div class='code'>game LessThanEqualTo
+
+v : Bool
+v = 5 <= 2
+</div>
+<h4>Relational Operators</h4><div class='code'>game RelationalOperators
+
+eq : Bool
+eq = True == True
+
+neq : Bool
+neq = 1 /= 2
+
+gt : Bool
+gt = 2 > 1
+
+gte : Bool
+gte = 2 >= 2
+
+lt : Bool
+lt = 1 < 2
+
+lte : Bool
+lte = 2 <= 2
+</div>
+<h4>Not Equal2</h4><div class='code'>game NEQ2
+
+v : Bool
+v = True /= True
+</div>
+<h4>Greater Than</h4><div class='code'>game GreaterThan
+
+v : Bool
+v = 5 > 2
+</div>
+<h4>Division</h4><div class='code'>game Division
+
+v : Int
+v = 10 / 2
+</div>
+<h4>Get Board Value from Indexed Board</h4><div class='code'>game GetBoardValue
+
+type Board = Array(1,1) of Int
+
+b : Board
+b!(1,1) = 8
+
+v : Int
+v = b!(1,1)
+</div>
+<h4>Boolean Board with Index</h4><div class='code'>game BoolBoardIndexed
+
+type Board = Array(1,1) of Bool
+
+b : Board
+b!(1,1) = False
+</div>
+<h4>Get Board Value from ForAll Board</h4><div class='code'>game GetBoardValue
+
+type Board = Array(3,3) of Int
+
+b : Board
+b!(x,y) = 5
+
+v : Int
+v = b!(2,2)
+</div>
+<h4>Let Expression with Bool</h4><div class='code'>game LetWithBool
+
+v : Bool
+v = let x = True in x
+</div>
+<h4>Simple Let Expression</h4><div class='code'>game SimpleLet
+
+v : Int
+v = let x = 5 in x
+</div>
+<h4>Relational Operator with Bools</h4><div class='code'>game RelationalOpBools
+
+v : Bool
+v = True == True
+</div>
+<h4>And</h4><div class='code'>game And1
+
+v : Bool
+v = and(True,True)
+</div>
+<h4>Board of Tuples</h4><div class='code'>game BoardOfTuples
+
+type Board = Array(1,1) of (Bool,Bool)
+
+boardOfTups : Board
+boardOfTups!(x,y) = (True,False)
+</div>
+<h4>Relational Op for Ints</h4><div class='code'>game RelationalOpForInts
+
+v : Bool
+v = 5 == 2
+</div>
+<h4>Let with While</h4><div class='code'>game LetWhile
+
+w : Int
+w = let z = 10 in while z > 0 do z - 1
+</div>
+<h4>Negate</h4><div class='code'>game Negate
+
+-- another way to write the builtin 'not' function
+-- ex. negate(True)  = False
+--     negate(False) = True
+negate : Bool -> Bool
+negate(x) = if x then False else True
+</div>
+<h4>Or with Symbols</h4><div class='code'>game OrSymbols
+
+type T={A,B}
+
+v : Bool
+v = or(A == B, True == False)
+</div>
+      </div>
+    </div>
+  </div>
+  <div id="footer">
+    <a href="https://bogl.engr.oregonstate.edu">BoGL Editor</a> | <a href="https://bogl.engr.oregonstate.edu/tutorials/">BoGL Tutorials</a> | Problems? email <a href="mailto:friedmab@oregonstate.edu">friedmab@oregonstate.edu</a>
+  </div>
+  <script src="list.js" type="text/javascript" async="true"></script>
+</body>
+</html>
