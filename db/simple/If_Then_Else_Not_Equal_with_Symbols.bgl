@@ -2,5 +2,5 @@ game IfThenElseNEQ
 
 type T = {A,B}
 
-f : T -> T
-f(x) = if x /= A then B else A
+flip : T -> T
+flip(x) = if x /= A then B else A

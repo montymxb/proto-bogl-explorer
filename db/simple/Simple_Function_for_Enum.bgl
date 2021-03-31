@@ -1,0 +1,7 @@
+game EnumFunctionExample
+
+type Fruit = {Banana,Apple,Pear}
+
+-- simple function that returns the fruit that it's given
+identitySymbol : Fruit -> Fruit
+identitySymbol(f) = f

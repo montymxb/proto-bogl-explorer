@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Proto BoGL Explorer</title>
+  <title>Bogl Explorer</title>
   <meta charset="utf-8">
   <script src="d3.v5.min.js"></script>
   <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
@@ -40,7 +40,7 @@
           The top of the graph being your known program, and the bottom being your goal.
           The directed edges are followed to determine <span class="orang">language features</span> and <span class="purp">programs</span> that show up in your search results.
             <ul>(hint: If the graph or your search results get too much, try working with programs that are simpler and have fewer differences, and gradually build up to what you want to see.)</ul>
-            <ul><a href="list.html">here is a list of example programs you can use for known or goal programs.</a></ul>
+            <ul><a href="list.html" target="_blank">here is a list of example programs you can use for known or goal programs.</a></ul>
         </li>
       </ol>
       <p style="font-weight:bold;max-width:50vw;margin:8px auto">Known:</p>
@@ -48,9 +48,9 @@
       <p style="font-weight:bold;max-width:50vw;margin:8px auto">Goal:</p>
       <textarea id="codearea2" name="goal" class='code codearea' editable="true" placeholder="game ExampleToCompareWith" autocorrect="off" autocomplete="off" autocapitalize="none"></textarea>
       <input id="search" type="button" value="Search">
+      <div id="graph" style="text-align: center;"></div>
       <div id="results"></div>
       <div id="loadspace"></div>
-      <div id="graph" style="text-align: center;"></div>
     </div>
   </div>
   <div id="footer">

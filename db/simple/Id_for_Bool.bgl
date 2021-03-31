@@ -1,5 +1,0 @@
-game IdBool
-
--- returns what it's given
-idBool : Bool -> Bool
-idBool(x) = x

@@ -1,5 +1,0 @@
-game Example
-
--- returns what it is given
-id : Int -> Int
-id(x) = x

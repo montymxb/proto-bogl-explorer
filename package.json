@@ -1,0 +1,31 @@
+{
+  "name": "proto-bogl-explorer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/montymxb/proto-bogl-explorer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/montymxb/proto-bogl-explorer/issues"
+  },
+  "homepage": "https://github.com/montymxb/proto-bogl-explorer#readme",
+  "dependencies": {
+    "tree-sitter": "^0.17.0",
+    "web-tree-sitter": "^0.17.0"
+  },
+  "devDependencies": {
+    "tree-sitter-bogl": "^0.3.14",
+    "tree-sitter-cli": "^0.17.0"
+  }
+}

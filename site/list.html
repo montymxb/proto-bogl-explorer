@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Proto BoGL Explorer</title>
+  <title>Simple BoGL Programs | BoGL Explorer</title>
   <meta charset="utf-8">
   <script src="d3.v5.min.js"></script>
   <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
@@ -94,153 +94,6 @@ like this
 v : Int
 v = 1 - 1
 </div>
-<h4>Various Examples</h4><div class='code'>game VariousExamples
-
---
--- Various examples to test your understanding
---
-
-type Board = Array(3,3) of Int
-type Input = Int
-
-type Player = {X,Y}
-
-lessThanTen : Int -> Bool
-lessThanTen(x) = x < 10
-
-weirdAdd : (Int, Int) -> (Int, Int)
-weirdAdd(x,y) = (x + y, y)
-
-namedWhileStep : (Int, Int) -> (Int, Int)
-namedWhileStep(x, step) = while lessThanTen(x) do weirdAdd(x, step)
-
-succ : Int -> Int
-succ(n) = n + 1
-
-inf : Int -> Int
-inf(n) = while True do succ(n)
-
-identity : Int -> Int
-identity(n) = while False do succ(n)
-
-incr : Int -> Int
-incr(x) = x + 1
-
-whileTest : Int -> Int
-whileTest(x) = while lessThanTen(x) do incr(x)
-
-false : Bool
-false = let b = True in while b do False
-
--- a while loop that gets its local, mutable context from a function
-toTenF : Int -> Int
-toTenF(x) = while x < 10 do x + 1
-
--- a while loop that gets its local, mutable context from a let expression
-toTenV : Int
-toTenV = let x = 1 in while x < 10 do x + 1
-
-ten1 : Int
-ten1 = toTenV
-
-ten2 : Int
-ten2 = toTenF(1)
-
--- what if we mix the two?
--- we get an infinite loop, if we aren't careful
--- the let expression context shadows the function context when parsing the while loop's local context
-mixed : Int -> Int
-mixed(x) = let a = 1 in while x < 10 do x + 1
-
--- here we use x as the step size
-mixedWell : Int -> Int
-mixedWell(x) = let a = 1 in (while a < 10 do a + x)
-
-ten3 : Int
-ten3 = mixedWell(1)
-
--- a use case for mixing the two is illustrated below:
--- this example is commented out because there is a type error (note: the error message is wrong)
--- a while loop like this has to have type FunctionInput -> FunctionInput
---badCounter : (Int, Int) -> Int
---badCounter(count, step) = while count < 10 do count + step
-
--- this works, but it is a bit cumbersome to use the result (we have to extract the first element of the tuple)
-betterCounter : (Int, Int) -> (Int, Int)
-betterCounter(count, step) = while count < 10 do (count + step, step)
-
-tenOne : (Int, Int)
-tenOne = betterCounter(1,1)
-
--- we can get around this by using a let-context
-counter : (Int, Int) -> Int
-counter(start, step) = let x = start in while x < 10 do x + step
-
-ten4 : Int
-ten4 = counter(1, 1)
-
--- what if we use two loops?
--- the left loop starts with x = 1
--- the right loop also starts with x = 1
--- result: 30 (not 20!)
-twoLoops : Int
-twoLoops = let x = 1 in (while x < 10 do x + 1) + (while x < 10 do x + 19)
-
-thirty : Int
-thirty = twoLoops
-
--- here we thread the result of the first loop to the second and the result is 20
-twoLoops2 : Int -> Int
-twoLoops2(x) = let y = (while x < 10 do x + 1) in y + (while y < 10 do y + 1)
-
-twenty : Int
-twenty = twoLoops2(1)
-
--- what if we use x outside the loop?
--- the loop has no effect on the outer x
--- result: 11 (not 20!)
-out : Int
-out = let x = 1 in (while x < 10 do x + 1) + x
-
-eleven : Int
-eleven = out
-
--- how about nested let expressions?
--- let a = 10 has no effect on the do-expression
-n : Int
-n = let x = 1 in while let a = 10 in x < 5 do x + 1
-
-five : Int
-five = n
-
--- this will never terminate!
--- a let variable is only mutable in a while loop that shares its scope
--- and even in that case, the mutable variable is actually different from the let variable (see out)
--- x is the only mutable variable and it is stuck at i + 1 = 2
-n2 : Int
-n2 = let x = 1 in while x < 10 do let i = 1 in i + 1
-
--- this fixes the above problem. x is mutable in the outer loop, i is mutable in the inner loop
--- x = i = 15
-n3 : Int
-n3 = let x = 1 in while x < 10 do let i = 1 in while i < 15 do i + 1
-
-fifteen : Int
-fifteen = n3
-
--- another infinite loop!
--- x is not mutable in the inner loop
-n4 : Int
-n4 = let x = 1 in while x < 10 do let i = 1 in while x < 15 do x + 1
-
--- a final example
--- what is the value of f(1)?
-f : Int -> Int
-f(x) = (while x < 10 do 2 * x) + (let x = 3 in while x < 10 do 2 * x) + x
-
-twentyNine : Int
-twentyNine = f(1)
-</div>
 <h4>Let With While in No Loop</h4><div class='code'>game LetWhileNoLoop
 
 -- does not loop
@@ -251,8 +104,8 @@ noloop = let z = True in while False do z
 
 type T = {A,B}
 
-f : T -> T
-f(x) = if x /= A then B else A
+flip : T -> T
+flip(x) = if x /= A then B else A
 </div>
 <h4>Add with Lets</h4><div class='code'>game AddWithLets
 
@@ -266,47 +119,10 @@ nested(x) = let a = 2 in
 upTo10 : Int -> Int
 upTo10(x) = while x < 10 do x + 1
 </div>
-<h4>Subtypes</h4><div class='code'>-- A basic test that subtyping and type synonyms work as exepected
--- i.e. subtyping is similar to a subset relation
-game SubTypes
-
-type TA = {A}
-type TB = {B}
-type TAB = TA & TB
-type TABC = TAB & {C}
-
-type T = Int & TABC
-type TSyn = T
-type TSyn2 = TSyn
-
-a : TA
-a = A
-
-f : TAB -> TAB
-f(x) = x
-
-g : TABC -> TABC
-g(x) = x
-
-h : T -> T
-h(x) = x
-
-a' : TSyn2
-a' = h(g(f(a)))
-
-a'' : T
-a'' = a'
-</div>
 <h4>Greater Than or Equal To</h4><div class='code'>game GreaterThanEqualTo
 
 v : Bool
 v = 5 >= 2
-</div>
-<h4>Id</h4><div class='code'>game Example
-
--- returns what it is given
-id : Int -> Int
-id(x) = x
 </div>
 <h4>Inc Let Expression</h4><div class='code'>game IncWithLet
 
@@ -331,8 +147,8 @@ t = not(False)
 </div>
 <h4>If Then Else on x</h4><div class='code'>game IfThenElseOnX
 
-f : Int -> Bool
-f(x) = if x > 0 then True else False
+greaterThanZero : Int -> Bool
+greaterThanZero(x) = if x > 0 then True else False
 </div>
 <h4>False in If Then Else</h4><div class='code'>game FalseIfThenElse
 
@@ -344,30 +160,6 @@ v = if False then 1 else 0
 -- ex. f(2) = (2,2)
 f : Int -> (Int,Int)
 f(x) = (x,x)
-</div>
-<h4>Lexical Scope</h4><div class='code'>game Scope
-
--- this is a challenging program,
--- but is helpful to understand how BoGL works
-
-x : Int
-x = 1
-
-b : Int
-b = x
-
-f : Int -> Int
-f(x) = x + b
-
-eleven : Int
-eleven = f(10)
-
-g : Int -> Int
-g(y) = x + y
-
--- eleven = 11 due to lexical scope
-eleven' : Int
-eleven' = let x = 10 in g(10)
 </div>
 <h4>Add Ints</h4><div class='code'>game AddInts
 
@@ -383,8 +175,8 @@ v = 1 + 5 - 1 * 5
 
 type T = {A,B}
 
-f : T -> T
-f(x) = if x == A then B else A
+flip : T -> T
+flip(x) = if x == A then B else A
 </div>
 <h4>Halve</h4><div class='code'>game Halve
 
@@ -396,54 +188,9 @@ f(x) = if x == A then B else A
 halve : Int -> Int
 halve(x) = x/2
 </div>
-<h4>Various Tuples</h4><div class='code'>-- functions for testing nested tuple behavior
-game VariousTuples
+<h4>Enum Type</h4><div class='code'>game SetType
 
---
--- A collection of various tuples for testing your understanding
---
-
-type Pair = (Int, Int)
-
-type Board = Array (3,3) of Int
-type Input = Int
-
-b : Board
-b!(x,y) = 0
-
-isZero : (Pair, Board) -> Bool
-isZero(p, b) = if b ! p == 0 then True else False
-
-isZero' : (Int, Int, Board) -> Bool
-isZero'(x,y,b) = if b ! (x,y) == 0 then True else False
-
-fst : Pair -> Int
-fst(a,b) = a
-
-snd : Pair -> Int
-snd(a,b) = b
-
-foo : (Pair, Pair) -> Pair
-foo(l,r) = (fst(l) + fst(r), snd(l) + snd(r))
-
-bar : (Pair, Int) -> Pair
-bar(p, i) = (fst(p) + snd(p), i)
-
-f : (Int, Int) -> (Int, Int)
-f(x,y) = (x+1, y+1)
-
-g : (Int, Int) -> (Int, Int)
-g(x,y) = (x-1,y-1)
-
-h : (Int, Int) -> (Int, Int)
-h(x,y) = (x*2, y*2)
-
-testing : Int -> Int
-testing(k) = let z = h(g(f((k,k)))) in
-                 fst(z) + snd(z)
-
-id : Pair -> Pair
-id(a,b) = (a,b)
+type S1 = {A,B}
 </div>
 <h4>Let with Add and Subtract</h4><div class='code'>game LetAddSub
 
@@ -488,14 +235,6 @@ x = A
 
 y : T
 y = B
-</div>
-<h4>Id for Symbol</h4><div class='code'>game IdSymbol
-
-type Fruit = {Banana,Apple,Pear}
-
--- returns what it's given
-id : Fruit -> Fruit
-id(f) = f
 </div>
 <h4>Tuple Type</h4><div class='code'>game TupleType
 
@@ -600,12 +339,6 @@ v = if True then 1 else 0
 fst : (Int,Int) -> Int
 fst(x,y) = x
 </div>
-<h4>Id for Bool</h4><div class='code'>game IdBool
-
--- returns what it's given
-idBool : Bool -> Bool
-idBool(x) = x
-</div>
 <h4>And with Int and Bool</h4><div class='code'>game AndwithIntBool
 
 v : Bool
@@ -615,6 +348,13 @@ v = and(1 == 1, True == False)
 
 v : Bool
 v = False == False
+</div>
+<h4>Simple Function</h4><div class='code'>game SimpleFunction
+
+-- a very simple function
+-- returns what it is given
+identity : Int -> Int
+identity(x) = x
 </div>
 <h4>Double</h4><div class='code'>game Double
 
@@ -690,6 +430,12 @@ just5 = 5
 nada : ExtendedInt
 nada = Nothing
 </div>
+<h4>Simple Function for Bool</h4><div class='code'>game BoolFunction
+
+-- simplest function with a Bool
+identityBool : Bool -> Bool
+identityBool(x) = x
+</div>
 <h4>Integer</h4><div class='code'>game Integer
 
 v : Int
@@ -705,9 +451,13 @@ v = 1 + 2 - 1 * 5 / 2
 v : Int
 v = 2 * 5
 </div>
-<h4>Set Type</h4><div class='code'>game SetType
+<h4>Simple Function for Enum</h4><div class='code'>game EnumFunctionExample
 
-type S1 = {A,B}
+type Fruit = {Banana,Apple,Pear}
+
+-- simple function that returns the fruit that it's given
+identitySymbol : Fruit -> Fruit
+identitySymbol(f) = f
 </div>
 <h4>Get Int Input</h4><div class='code'>game GetIntInput
 
@@ -810,26 +560,6 @@ b!(1,1) = 8
 
 v : Bool
 v = 5 <= 2
-</div>
-<h4>Relational Operators</h4><div class='code'>game RelationalOperators
-
-eq : Bool
-eq = True == True
-
-neq : Bool
-neq = 1 /= 2
-
-gt : Bool
-gt = 2 > 1
-
-gte : Bool
-gte = 2 >= 2
-
-lt : Bool
-lt = 1 < 2
-
-lte : Bool
-lte = 2 <= 2
 </div>
 <h4>Not Equal2</h4><div class='code'>game NEQ2
 

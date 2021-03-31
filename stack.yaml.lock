@@ -30,12 +30,12 @@ packages:
     version: 0.2.0.0
     git: git@github.com:montymxb/ConceptGraph.git
     pantry-tree:
-      size: 12278
-      sha256: 283558caf2331ca3725b76795a912effabe2fc58d54b36c0244c52262b4caf0b
-    commit: 2bf6a18e09435e7757c4725c6934d812c4eb719e
+      size: 12272
+      sha256: 4ffa2742f6c77da64db2675a3c6b46ec20802437754cb6ec4740862b08ef092d
+    commit: 15434149ea23171a31ee557bff8d8d006aa5ff60
   original:
     git: git@github.com:montymxb/ConceptGraph.git
-    commit: 2bf6a18e09435e7757c4725c6934d812c4eb719e
+    commit: 15434149ea23171a31ee557bff8d8d006aa5ff60
 snapshots:
 - completed:
     size: 565266
