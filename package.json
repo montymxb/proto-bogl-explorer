@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node testing-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,9 +22,13 @@
   "homepage": "https://github.com/montymxb/proto-bogl-explorer#readme",
   "dependencies": {
     "tree-sitter": "^0.17.0",
-    "web-tree-sitter": "^0.17.0"
+    "web-tree-sitter": "^0.18.0"
   },
   "devDependencies": {
+    "fs": "0.0.1-security",
+    "http": "0.0.1-security",
+    "http-proxy": "^1.18.1",
+    "open": "^8.0.4",
     "tree-sitter-bogl": "^0.3.14",
     "tree-sitter-cli": "^0.17.0"
   }

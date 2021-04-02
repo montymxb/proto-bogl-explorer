@@ -27,7 +27,7 @@ extraHeaders = addHeaders []
 -- | Cors resource policy to be used with 'corsified' middleware.
 appCorsResourcePolicy :: CorsResourcePolicy
 appCorsResourcePolicy = CorsResourcePolicy {
-    corsOrigins        = Just (["null","http://bogl.research.uphouseworks.com","https://bogl.research.uphouseworks.com"], False)
+    corsOrigins        = Just (["null","http://localhost:3000","http://bogl.research.uphouseworks.com","https://bogl.research.uphouseworks.com"], False)
   , corsMethods        = ["OPTIONS", "GET", "POST"]
   , corsRequestHeaders = ["Content-Type", "Allow", "X-PGE-Key"]
   , corsExposedHeaders = Nothing

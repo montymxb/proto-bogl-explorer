@@ -3,11 +3,23 @@
 <head>
   <title>Bogl Explorer</title>
   <meta charset="utf-8">
-  <script src="d3.v5.min.js"></script>
+  <script src="js/d3.v5.min.js"></script>
   <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
-  <script src="d3-graphviz.js"></script>
-  <script src="site.js" type="text/javascript" async="true"></script>
-  <link href="site.css" type="text/css" rel="stylesheet"/>
+  <script src="js/d3-graphviz.js"></script>
+  <script src="js/general.js" type="text/javascript"></script>
+  <script src="js/site.js" type="text/javascript" async="true"></script>
+  <link href="css/site.css" type="text/css" rel="stylesheet"/>
+
+  <!--tree-sitter-bogl highlighting (divs, non-editable)-->
+  <link href="css/bogl-highlight.css" type="text/css" rel="stylesheet"/>
+  <script src="js/tree-sitter.js" type="text/javascript"></script>
+  <script src="js/bogl-highlight.js" type="text/javascript"></script>
+
+  <!--CodeMirror highlighting (textareas, editable)-->
+  <link href="codemirror-5.60.0/lib/codemirror.css" rel="stylesheet">
+  <script src="codemirror-5.60.0/lib/codemirror.js" type="text/javascript"></script>
+  <script src="codemirror-5.60.0/mode/bogl/bogl.js"></script>
+
 </head>
 <body>
   <div id='main'>
@@ -22,7 +34,7 @@
         If you are learning BoGL, this tool can help you understand what BoGL language features you need to cover to go from one known BoGL program to a new program.
          <!--how two programs in BoGL are related, and what order of BoGL features you need to know in addition from the Known program to go from one program to the next.-->
       </h4>
-      <img id="path-img" src="step-stones.jpg" width="300" height="300" alt="Stepping Stones">
+      <img id="path-img" src="imgs/step-stones.jpg" width="300" height="300" alt="Stepping Stones">
       <ol style="color:#444;display:block;margin:8px auto;max-width:50vw;padding:8px">
         <li>Enter a <span class="b">Known</span> BoGL program in the top box.</li>
         <li><span class="i">(optional)</span> Enter a <span class="b">Goal</span> BoGL program you <span class="i">want</span> to know in the bottom box (ideally a little more advanced than the known program).</li>
@@ -43,10 +55,16 @@
             <ul><a href="list.html" target="_blank">here is a list of example programs you can use for known or goal programs.</a></ul>
         </li>
       </ol>
+      <!-- Known code areas -->
       <p style="font-weight:bold;max-width:50vw;margin:8px auto">Known:</p>
-      <textarea id="codearea1" name="known" class='code codearea' editable="true" placeholder="game KnownExample" autocorrect="off" autocomplete="off" autocapitalize="none">game KnownExample</textarea>
+      <textarea id="codearea1" style="display:none" name="known" class='code codearea' editable="true" placeholder="game KnownExample" autocorrect="off" autocomplete="off" autocapitalize="none">game KnownExample</textarea>
+      <!--<div id="codearea1-v" class='code codearea-v'></div>-->
+
+      <!-- Goal code areas -->
       <p style="font-weight:bold;max-width:50vw;margin:8px auto">Goal:</p>
-      <textarea id="codearea2" name="goal" class='code codearea' editable="true" placeholder="game ExampleToCompareWith" autocorrect="off" autocomplete="off" autocapitalize="none"></textarea>
+      <textarea id="codearea2" style="display:none" name="goal" class='code codearea' editable="true" placeholder="game ExampleToCompareWith" autocorrect="off" autocomplete="off" autocapitalize="none"></textarea>
+      <!--<div id="codearea2-v" class='code codearea-v'></div>-->
+
       <input id="search" type="button" value="Search">
       <div id="graph" style="text-align: center;"></div>
       <div id="results"></div>

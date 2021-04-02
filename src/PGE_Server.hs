@@ -44,7 +44,7 @@ handler f (Object hm) = case (HM.lookup "knownProg" hm, HM.lookup "goalProg" hm)
 handler _ _           = return $ apiErr "Bad JSON provided"
 
 serverApp :: APIType -> Application
-serverApp f = logStdoutDev. extraHeaders . corsified $ serve api (handler f)
+serverApp f = logStdoutDev . corsified $ serve api (handler f)
 
 startServer :: APIType -> IO ()
 startServer f = run 8181 (serverApp f)

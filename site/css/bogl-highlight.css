@@ -1,0 +1,37 @@
+/* bogl highlighting */
+
+.bogl-code .game_def {
+  color: #708;
+}
+
+.bogl-code .upperIdentifier {
+  color: #05a;
+}
+
+.bogl-code .identifier {
+  color: #000;
+}
+
+.bogl-code .keyword {
+  color: #708;
+}
+
+.bogl-code .builtin_type {
+  color: #30a;
+}
+
+.bogl-code .number {
+  color: #164;
+}
+
+.bogl-code .comment {
+  color: #a50;
+}
+
+.bogl-code .builtin {
+  color: #30a;
+}
+
+.bogl-code .binop {
+  color: #30a;
+}

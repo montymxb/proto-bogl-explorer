@@ -1,4 +1,4 @@
-
+// NodeJS approach
 function test1() {
 
   const Parser = require('tree-sitter');
@@ -29,7 +29,7 @@ function test1() {
 
 }
 
-/**/
+// WebAssembly approach
 function testWASM() {
   const Parser = require('web-tree-sitter');
 
@@ -38,10 +38,27 @@ function testWASM() {
     const parser = new Parser();
     const Bogl = await Parser.Language.load('tree-sitter-bogl.wasm');
     parser.setLanguage(Bogl);
-    const tree = parser.parse('game Ex\n\nv : Int\nv = 2 * 2 + 4');
+    let sourceCode = 'game Ex\n\nv : Int\nv = 2 * 2 + 4';
+    let brokenSC = sourceCode.split("\n");
+    const tree = parser.parse(sourceCode);
+
     console.log(tree.rootNode.toString());
+
+    // 1. Using the parse tree, grab & tag all the relevant parts to BoGL
+    // 2. Means annotating each 'label' with a portion of code it applies to
+    // 3. repeat this nesting, and filter out the portion that is contained in sub-labels
+    // 4. combine and we're done
+
+    // rows can be obtained by splitting on line breaks, easy
+    const g = tree.rootNode;
+    console.log(g)
+    console.log("    ")
+    console.log(g)
+
+    // tag everything by changing
+    const callExpression = tree.rootNode.child(0).child(0).child(1);
+    console.log(callExpression);
   })();
 }
-/**/
 
 testWASM();

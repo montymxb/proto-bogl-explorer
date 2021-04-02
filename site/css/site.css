@@ -1,0 +1,214 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.i {
+  font-style: italic;
+}
+
+.b {
+  font-weight: bold;
+}
+
+#title {
+  text-align: center;
+  font-size: 70px;
+  font-weight: 200;
+}
+
+textarea:focus {
+  outline-width: 0;
+}
+
+#count {
+  color: #999;
+  text-align: center;
+}
+
+#error {
+  display: block;
+  background: #fcc;
+  border-radius: 8px;
+  max-width: 800px;
+  padding: 8px;
+  margin: 8px auto;
+}
+
+#footer {
+  display: block;
+  color: #ccc;
+  font-size: 12px;
+  text-align: center;
+  margin: 16px auto;
+}
+
+.codearea,.codearea-v {
+  display: block;
+  width: 50vw;
+  margin: 8px auto;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 16px;
+  min-height: 100px;
+  resize: auto;
+  overflow: auto;
+}
+
+.codearea {
+  /*
+  color: rgba(0,0,0,0);
+  caret-color: #000;
+  border: none;
+  */
+}
+
+.codearea-v {
+  margin-top: -226px;
+  z-index: -1;
+  resize: none;
+}
+
+#prim-img, #path-img {
+  margin: 8px auto;
+  display: block;
+  border-radius: 16px;
+  transition: 0.3s;
+}
+
+#prim-img:hover {
+  box-shadow: 8px 8px #6cf;
+}
+
+#path-img:hover {
+  box-shadow: 8px 8px #333;
+}
+
+#graph, #loadspace {
+  display: block;
+  width: 100vw;
+  margin: 16px auto 8px auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+#search {
+  display: block;
+  width: 200px;
+  margin: 8px auto;
+  height: 25px;
+  transition: 0.3s;
+}
+
+#search:hover {
+  cursor: pointer;
+  color: #6cf;
+}
+
+#main {
+  background: #fff;
+  margin: 4px auto;
+}
+
+#wrap {
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+}
+
+#results {
+  max-width: 800px;
+  display: block;
+  margin: 8px auto;
+  padding: 8px;
+}
+
+h3 {
+  font-size: 30px;
+  font-weight: 300px;
+  /*color: #111;*/
+  color: purple;
+  margin: 8px auto;
+  margin-right: 16px;
+  display: inline-block;
+}
+
+.purp {
+  color: purple;
+}
+
+.orang {
+  color: darkorange;
+}
+
+.code {
+  font-family: "Inconsolata", monospace;
+}
+
+#results .code,.codedemo {
+  color: #555;
+  font-size: 16px;
+  margin-bottom: 32px;
+  background-color: #f7f7f7;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.attrs {
+  font-size: 14px;
+  margin: 8px 0 8px 0;
+}
+
+.attr {
+  color: darkorange;
+}
+
+.item {
+  /*
+  border-style: none none none solid;
+  border-width: 2px;
+  border-color: #aaa;
+  */
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+    background: #fff;
+    border-radius: 20px;
+  }
+  to {
+    transform: rotate(360deg);
+    background: #000;
+    border-radius: 0px;
+    border-color: #fff;
+  }
+}
+
+.loading {
+  transform: rotate(120deg)
+  display: block;
+  margin: 8px auto;
+  width: 20px;
+  height: 20px;
+  background: #ccc;
+
+  animation-name: spinner;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* overriding codemirror styles */
+.CodeMirror {
+  width: 50vw;
+  margin: 8px auto;
+  font-size: 16px;
+  height: 150px;
+  resize: both;
+  border: solid 1px #999;
+}

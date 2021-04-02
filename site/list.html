@@ -3,17 +3,25 @@
 <head>
   <title>Simple BoGL Programs | BoGL Explorer</title>
   <meta charset="utf-8">
-  <script src="d3.v5.min.js"></script>
+  <script src="js/d3.v5.min.js"></script>
   <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
-  <script src="d3-graphviz.js"></script>
-  <link href="site.css" type="text/css" rel="stylesheet"/>
+  <script src="js/d3-graphviz.js"></script>
+  <link href="css/site.css" type="text/css" rel="stylesheet"/>
+
+  <!--BoGL highlighting stuff-->
+  <script src="js/general.js" type="text/javascript"></script>
+  <link href="css/bogl-highlight.css" type="text/css" rel="stylesheet"/>
+  <script src="js/tree-sitter.js" type="text/javascript"></script>
+  <script src="js/bogl-highlight.js" type="text/javascript"></script>
+  <script src="js/list.js" type="text/javascript"></script>
+
 </head>
 <body>
   <div id='main'>
     <div id='wrap'>
       <img id="prim-img" src="favicon.ico" width="150" height="150" alt="BoGL Icon">
       <h1 id='title'>Simple BoGL Programs</h1>
-      <div id="results">
+      <div id="results" style="display:none">
 <h4>Less Than</h4><div class='code'>game LessThan
 
 v : Bool
@@ -89,7 +97,7 @@ in a block
 like this
 -}
 </div>
-<h4>Subtraction</h4><div class='code'>game Subtractionn
+<h4>Subtraction</h4><div class='code'>game Subtraction
 
 v : Int
 v = 1 - 1
@@ -456,8 +464,8 @@ v = 2 * 5
 type Fruit = {Banana,Apple,Pear}
 
 -- simple function that returns the fruit that it's given
-identitySymbol : Fruit -> Fruit
-identitySymbol(f) = f
+identityEnum : Fruit -> Fruit
+identityEnum(f) = f
 </div>
 <h4>Get Int Input</h4><div class='code'>game GetIntInput
 
@@ -661,6 +669,6 @@ v = or(A == B, True == False)
   <div id="footer">
     <a href="https://bogl.engr.oregonstate.edu">BoGL Editor</a> | <a href="https://bogl.engr.oregonstate.edu/tutorials/">BoGL Tutorials</a> | Problems? email <a href="mailto:friedmab@oregonstate.edu">friedmab@oregonstate.edu</a>
   </div>
-  <script src="list.js" type="text/javascript" async="true"></script>
+  <script src="js/list.js" type="text/javascript" async="true"></script>
 </body>
 </html>
