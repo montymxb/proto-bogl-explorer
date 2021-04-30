@@ -29,6 +29,7 @@ dependencies:
 - text
 - wai-extra
 - wai-cors
+- process
 library:
   source-dirs: src
 

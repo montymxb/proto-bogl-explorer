@@ -154,7 +154,7 @@ setTimeout(function() {
     if(p) {
       document.getElementById("codearea1").value = p;
     } else {
-      document.getElementById("codearea1").value = ""
+      document.getElementById("codearea1").value = "";
     }
   }
 

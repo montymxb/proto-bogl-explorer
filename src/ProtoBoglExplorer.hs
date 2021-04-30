@@ -10,6 +10,9 @@ import Data.Text (Text,pack,unpack)
 import qualified Data.Vector as Vect
 import qualified Data.HashMap.Strict as HM
 
+-- TODO remove later...
+import System.Process
+
 --getBGLFileFromDir :: String -> String -> (String,IO String)
 
 getFileFromDir :: String -> String -> String -> IO (String, String)
@@ -69,6 +72,11 @@ protoBoglExplorer kProg gProg = do
         bglFiles
         extraProgs
         extraAttribs)
+
+  -- quickly render the dot file locally for testing purposes!
+  -- write GV spec
+  _ <- writeFile "last-lattice.gv" dotContent
+  _ <- system ("dot -Tpng -olast-lattice.png last-lattice.gv")
 
   let npNames = map fst nextProgs
   let nps' = filter (\(a,b) -> elem a (map fst nextProgs)) bglFiles'

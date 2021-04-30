@@ -48,6 +48,7 @@ library
     , ConceptGraph
     , directory
     , vector
+    , process
   default-language: Haskell2010
 
 executable proto-bogl-explorer-exe
@@ -68,6 +69,7 @@ executable proto-bogl-explorer-exe
     , wai-cors
     , wai-extra
     , warp
+    , process
   default-language: Haskell2010
 
 test-suite proto-bogl-explorer-test
@@ -89,4 +91,5 @@ test-suite proto-bogl-explorer-test
     , wai-cors
     , wai-extra
     , warp
+    , process
   default-language: Haskell2010
