@@ -1,4 +1,0 @@
-game ArithmeticOperators
-
-v : Int
-v = 1 + 2 - 1 * 5 / 2

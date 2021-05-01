@@ -1,4 +1,4 @@
-game AddSubMult
+game GeneralMultiply
 
-v : Int
-v = 1 + 5 - 1 * 5
+mul : (Int,Int) -> Int
+mul(x,y) = x*y

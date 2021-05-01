@@ -14,9 +14,9 @@ ELSE
 game CoinToss
 
 type Coin = {H, T}
-type Child = {Jack, Rosa}
+type Player = {Jack, Rosa}
 
-whoDoesDishes : (Coin, Coin) -> Child
+whoDoesDishes : (Coin, Coin) -> Player
 whoDoesDishes(pick, toss) = if toss == pick then
                                Rosa
                             else

@@ -1,4 +1,0 @@
-game LetMult
-
-v : Int
-v = let x = 5 * 2 in x

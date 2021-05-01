@@ -1,4 +1,0 @@
-game Mult
-
-v : Int
-v = 2 * 5

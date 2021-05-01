@@ -1,4 +1,0 @@
-game RelationalBool
-
-v : Bool
-v = False == False

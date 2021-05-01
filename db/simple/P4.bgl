@@ -1,4 +1,6 @@
-game Subtraction
+game LetBoard
 
-v : Int
-v = 1 - 1
+type Board = Array(1,1) of Int
+
+b : Board
+b!(x,y) = let q = 5 in q
