@@ -3,7 +3,7 @@ module ProtoBoglExplorer (protoBoglExplorer) where
 import Data.Aeson()
 import PGE_Server
 import System.Directory
-import FormalConceptAnalysis
+import ProgramConceptClassifier
 import Bogl_Specifics
 import Data.Aeson
 import Data.Text (Text,pack,unpack)
@@ -50,7 +50,9 @@ protoBoglExplorer kProg gProg = do
   bglFiles1 <- getAllBGLFilesFromDir (dir ++ "simple/")
   bglFiles2 <- getAllBGLFilesFromDir (dir ++ "games/")
   bglFiles2 <- getAllBGLFilesFromDir (dir ++ "7th_grade_curr/")
+  --bglFilesTEST <- getAllBGLFilesFromDir (dir ++ "test/")
   let bglFiles'= bglFiles1 ++ bglFiles2
+  --let bglFiles' = bglFilesTEST
   let bglFiles = rightProgs $ parseBOGLPrograms $ bglFiles'
 
   let kn = parseBOGLPrograms [("Known",kProg)]
@@ -65,13 +67,11 @@ protoBoglExplorer kProg gProg = do
   let extraProgs    = []
   let extraAttribs  = []
 
-  (dotContent,nextProgs) <- fca (FCA
+  let (dotContent,nextProgs) = analyze (MappablePrograms
         boglConceptMapping
         known
         goal
-        bglFiles
-        extraProgs
-        extraAttribs)
+        bglFiles)
 
   -- quickly render the dot file locally for testing purposes!
   -- write GV spec
