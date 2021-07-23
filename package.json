@@ -1,7 +1,7 @@
 {
   "name": "proto-bogl-explorer",
   "version": "1.0.0",
-  "description": "",
+  "description": "Prototype BoGL Program Explorer via Program-Concept Classifications",
   "main": "index.js",
   "directories": {
     "test": "test"

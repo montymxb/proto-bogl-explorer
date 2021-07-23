@@ -25,6 +25,17 @@ packages:
       sha256: 674243e0470949fa81a6025ae0ddb1c52c48cffbf163249868563ec826eaadc5
   original:
     hackage: partial-order-0.2.0.0@sha256:a0d6ddc9ebcfa965a5cbcff1d06d46a79d44ea5a0335c583c2a51bcb41334487,2275
+- completed:
+    name: ProgramConceptClassifier
+    version: 0.2.0.0
+    git: https://github.com/montymxb/ProgramConceptClassifier.git
+    pantry-tree:
+      size: 18584
+      sha256: 0c1ece416b75a749e9b3d0ecd09aa5ec8c72e19941cc5193f5a68f6049ee6d14
+    commit: f43cccb8b91955076e1306e9fdcf9a38bda1bae7
+  original:
+    git: https://github.com/montymxb/ProgramConceptClassifier.git
+    commit: f43cccb8b91955076e1306e9fdcf9a38bda1bae7
 snapshots:
 - completed:
     size: 565266

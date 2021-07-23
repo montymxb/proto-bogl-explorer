@@ -3,12 +3,13 @@ module ProtoBoglExplorer (protoBoglExplorer) where
 import Data.Aeson()
 import PGE_Server
 import System.Directory
-import ProgramConceptClassifier
-import Bogl_Specifics
 import Data.Aeson
-import Data.Text (Text,pack,unpack)
+import Data.Text (pack)
 import qualified Data.Vector as Vect
 import qualified Data.HashMap.Strict as HM
+
+import ProgramConceptClassifier
+import Bogl_Specifics
 
 -- TODO remove later...
 import System.Process
@@ -38,10 +39,6 @@ getAllBGLFilesFromDir dir = do
 protoBoglExplorer :: APIType
 protoBoglExplorer kProg gProg = do
   let dir = "db/"
-  --let dir = "/Users/Bfriedman/OSU/Research/ConceptGraph/db_programs/"
-  --let dir160 = "/Users/Bfriedman/Downloads/CS160-BoGL-section/assignment_9_tictactoe/"
-  --let dir160 = "/Users/Bfriedman/Downloads/CS160-BoGL-section/assignment_8_nim_board/"
-  --let dir160 = "/Users/Bfriedman/Downloads/CS160-BoGL-section/sub_8/"
 
   let getSimpleBGLFile = getFileFromDir ".bgl" (dir ++ "simple/")
   let getGameBGLFile = getFileFromDir ".bgl" (dir ++ "games/")
@@ -63,9 +60,6 @@ protoBoglExplorer kProg gProg = do
   --g2 <- getGameBGLFile "tictactoe"
   let gn = parseBOGLPrograms [("Goal",gProg)]
   let goal = rightProgs gn
-
-  let extraProgs    = []
-  let extraAttribs  = []
 
   let (dotContent,nextProgs) = analyze (MappablePrograms
         boglConceptMapping

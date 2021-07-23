@@ -10,7 +10,7 @@ import Network.Wai
 import Network.Wai.Handler.Warp
 import Servant
 import Data.Aeson
-import Data.Text (Text,pack,unpack)
+import Data.Text (Text,unpack)
 import GHC.Generics()
 import CORSMiddleware
 import Network.Wai.Middleware.RequestLogger (logStdoutDev)
